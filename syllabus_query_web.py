@@ -34,7 +34,7 @@ def extract_text_from_pdf(pdf_path):
     return text
 
 # Function to parse syllabus and extract course and module details
-def parse_syllabus(text):
+# def parse_syllabus(text):
     lines = text.split("\n")
     courses = []
     current_course = None
@@ -50,6 +50,28 @@ def parse_syllabus(text):
         elif current_course and line[0].isdigit():  # Identify Module (Assumption: Starts with number)
             module_number, module_name = line.split(".", 1)
             courses.append([current_course, module_number.strip(), module_name.strip()])
+
+    return courses
+
+def parse_syllabus(text):
+    lines = text.split("\n")
+    courses = []
+    current_course = None
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+
+        # Identify Course Name (Assumption: Capitalized words with & or spaces)
+        if line.istitle() or "&" in line:
+            current_course = line
+        elif current_course and line[0].isdigit():  # Identify Module (Assumption: Starts with number)
+            if "." in line:
+                module_number, module_name = line.split(".", 1)
+                courses.append([current_course, module_number.strip(), module_name.strip()])
+            else:
+                print(f"Skipping malformed module line: {line}")  # Debugging: Shows skipped lines
 
     return courses
 

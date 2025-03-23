@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Syllabus Query System</title>
+</head>
+<body>
+    <h2>Upload Syllabus PDF</h2>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="pdf" accept=".pdf" required>
+        <button type="submit">Upload & Process</button>
+    </form>
+
+    <h2>Ask a Question</h2>
+    <form method="post">
+        <input type="text" name="question" placeholder="Enter your question" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if result %}
+        <h3>Result:</h3>
+        <p><strong>Course Name:</strong> {{ result[0] }}</p>
+        <p><strong>Module Number:</strong> {{ result[1] }}</p>
+        <p><strong>Module Name:</strong> {{ result[2] }}</p>
+    {% endif %}
+</body>
+</html>
