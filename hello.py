@@ -1,5 +1,6 @@
 import pdfplumber
 import pandas as pd
+import re
 
 def pdf_to_csv(pdf_path, csv_path):
     data = []  # Store extracted text data
@@ -26,8 +27,6 @@ def pdf_to_csv(pdf_path, csv_path):
 pdf_path = "sem.pdf"  # Replace with your PDF file path
 csv_path = "output.csv"  # Output CSV file path
 pdf_to_csv(pdf_path, csv_path)
-import pandas as pd
-import re
 
 def extract_course_and_modules(csv_path, output_path):
     # Load CSV file without headers
@@ -64,10 +63,48 @@ def extract_course_and_modules(csv_path, output_path):
     if extracted_data:
         final_df = pd.DataFrame(extracted_data, columns=["Course Title"] + [f"Column {i}" for i in range(len(extracted_data[0]) - 1)])
         final_df.to_csv(output_path, index=False)
+        print(f"✅ Data extracted and saved to {output_path}")
 
 # Example Usage
 csv_input_path = "output.csv"  # Replace with actual CSV path
-csv_output_path = "structured_output.csv"
+csv_output_path = "data.csv"
 extract_course_and_modules(csv_input_path, csv_output_path)
 
-print(f"✅ Data extracted and saved to {csv_output_path}")
+# Process and clean extracted data
+df = pd.read_csv('data.csv')
+df = df.iloc[:, :6]
+
+# Merge columns and clean up
+df['Merged Column'] = df['Column 2'].combine_first(df['Column 3'])
+df.drop(columns=['Column 2', 'Column 3', 'Column 4'], inplace=True)
+df.rename(columns={
+    'Course Title': 'Subject',
+    'Column 0': 'Module no',
+    'Merged Column': 'Module content',
+    'Column 1': 'Replacement'
+}, inplace=True)
+
+# Convert "Module no" to numeric (coerce errors to NaN)
+df["Module no"] = pd.to_numeric(df["Module no"], errors="coerce")
+
+# Replace numeric module content with corresponding value from "Replacement"
+df["Module content"] = df.apply(
+    lambda row: row["Replacement"] if re.fullmatch(r"\d+", str(row["Module content"])) else row["Module content"],
+    axis=1
+)
+
+# Drop the "Replacement" column
+df.drop(columns=["Replacement"], inplace=True)
+
+# Identify the first occurrence and keep it, remove subsequent duplicates
+df["is_duplicate"] = df.duplicated(subset=["Subject", "Module no"], keep="first")
+
+# Keep only non-duplicate entries
+df = df[df["is_duplicate"] == False].drop(columns=["is_duplicate"])
+
+# Keep only the first 6 modules per subject
+df = df[df["Module no"] <= 6]
+
+# Save the cleaned data
+df.to_csv('data.csv', index=False)
+print("✅ Final processed data saved to data.csv")
