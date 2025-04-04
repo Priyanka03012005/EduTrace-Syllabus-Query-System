@@ -1,0 +1,1162 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12
+Sr. No.,Heading,Particulars,,,,,,,,,,
+1,Title of the Course,"Third Year Engineering
+( Computer Engineering)",,,,,,,,,,
+2,Eligibility for Admission,"After Passing Second Year Engineering as per
+the Ordinance 0.6243",,,,,,,,,,
+3,Passing Marks,40%,,,,,,,,,,
+4,"Ordinances /
+Regulations ( if any)",Ordinance 0.6243,,,,,,,,,,
+5,No. of Years / Semesters,8 semesters,,,,,,,,,,
+6,Level,"P.G. / U.G./ Diploma / Certificate
+(Strike out which is not applicable)",,,,,,,,,,
+7,Pattern,"Yearly / Semester
+(Strike out which is not applicable )",,,,,,,,,,
+8,Status,"New / Revised
+(Strike out which is not applicable )",,,,,,,,,,
+9,"To be implemented from
+Academic Year",With effect from Academic Year: 2021-2022,,,,,,,,,,
+"Course
+Code",Course Name,"Teaching Scheme
+(Contact Hours)",,,,,Credits Assigned,,,,,
+,,Theory,,"Pract.
+Tut.",,,Theory,,Pract.,,Total,
+CSC601,"System Programming &
+Compiler Construction",3,,--,,,3,,--,,3,
+CSC602,"Cryptography & System
+Security",3,,--,,,3,,,,3,
+CSC603,Mobile Computing,3,,--,,,3,,--,,3,
+CSC604,Artificial Intelligence,3,,--,,,3,,--,,3,
+CSDLO601x,"Department Level Optional
+Course -2",3,,--,,,3,,--,,3,
+CSL601,"System Programming &
+Compiler Construction Lab",--,,2,,,--,,1,,1,
+CSL602,"Cryptography & System
+Security Lab",--,,2,,,--,,1,,1,
+CSL603,Mobile Computing Lab,--,,2,,,--,,1,,1,
+CSL604,Artificial Intelligence Lab,--,,2,,,--,,1,,1,
+CSL605,"Skill base Lab Course:
+Cloud Computing",--,,4,,,--,,2,,2,
+CSM601,Mini Project Lab: 2B,--,,4$,,,--,,2,,2,
+Total,,15,,16,,,15,,08,,23,
+"Course
+Code",Course Name,Examination Scheme,,,,,,,,,,
+,,Theory,,,,,,,"Term
+Work","Pract.
+&oral",,Total
+,,Internal Assessment,,,,"End
+Sem
+Exa
+m",,"Exam.
+Duration
+(in Hrs)",,,,
+,,"Test
+1","Test
+2",,Avg,,,,,,,
+CSC601,"System Programming &
+Compiler Construction",20,20,,20,80,,3,--,--,,100
+CSC602,"Cryptography & System
+Security",20,20,,20,80,,3,--,--,,100
+CSC603,Mobile Computing,20,20,,20,80,,3,--,--,,100
+CSC604,Artificial Intelligence,20,20,,20,80,,3,--,--,,100
+CSDLO601x,"Department Level Optional
+Course -2",20,20,,20,80,,3,--,--,,100
+CSL601,"System Programming &
+Compiler Construction Lab",--,--,,--,--,,--,25,25,,50
+CSL602,"Cryptography & System
+Security Lab",--,--,,--,--,,--,25,--,,25
+CSL603,Mobile Computing Lab,--,--,,--,--,,--,25,-,,25
+CSL604,Artificial Intelligence Lab,,,,,,,,25,25,,50
+CSL605,"Skill base Lab Course:
+Cloud Computing",--,--,,--,--,,--,50,25,,75
+CSM601,Mini Project :2B,--,--,,--,--,,--,25,25,,50
+Total,,--,--,,100,400,,--,175,100,,775
+"Department Level
+Optional Courses",Semester,Code & Course,,,,,,,,,,
+"Department Level
+Optional Course -2",V I,"CSDLO6011: Internet of Things
+CSDLO6012: Digital Signal &
+Image Processing
+CSDLO6013: Quantitat ive Analy sis",,,,,,,,,,
+Course Code:,Course Title,Credit,,,,,,,,,,
+CSC601,System Programming and Compiler Construction,3,,,,,,,,,,
+"Prerequisite: Theoretical computer science, Operating system. Computer Organization and
+Architecture .",,,,,,,,,,,,
+Course Objectives:,,,,,,,,,,,,
+1,,To understand the role and functionality of various system programs over application,,,,,,,,,,
+,,programs.,,,,,,,,,,
+2,,"To understand basic concepts, structure","and design of assemblers, macro processors, linkers",,,,,,,,,
+,,and loaders.,,,,,,,,,,
+3,"To understand the basic principles of compiler design, its various constituent parts,
+algorithms and data structures required to be used in the compiler.",,,,,,,,,,,
+4,,To understand the need to follow the syntax in writing an application program and to learn,,,,,,,,,,
+,,how the analysis phase of compiler is designed to understand the programmer ‘s,,,,,,,,,,
+,,requirements without ambiguity,,,,,,,,,,
+5,,To synthesize the analysis phase outcomes to produce the object code that is efficient in,,,,,,,,,,
+,,terms of space and execution time,,,,,,,,,,
+"Course Outcomes: On successful completion of course, learner will be able to",,,,,,,,,,,,
+1,,Identify the relevance of different system programs.,,,,,,,,,,
+2,,Explain various data structures used for assembler and microprocessor design,,,.,,,,,,,
+3,"Distinguish between different loaders and linkers and their contribution in developing
+efficient user applications.",,,,,,,,,,,
+4,"Understand fundamentals of compiler design and identify the relationships among different
+phases of the compiler.",,,,,,,,,,,
+Module,,Content,,,,,,,Hrs,,,
+1,,,Introduction to System Software,,,,,,2,,,
+,1.1,,"Concept of System Software, Goals of system software, system program",,,,,,,,,
+,,,"and system programming, Introduction to various system programs such",,,,,,,,,
+,,,"as Assembler, Macro processor, Loader, Linker, Compiler, Interpreter,",,,,,,,,,
+,,,"Device Drivers, Operating system, Editors, Debuggers.",,,,,,,,,
+2,,,Assemblers,,,,,,7,,,
+,2.1,"Elements of Assembly Language programming, Assembly scheme, pass
+structure of assembler, Assembler Design: Two pass assembler Design
+and single pass Assembler Design for X86 processor, data structures used.",,,,,,,,,,
+3,,,Macros and Macro Processor,,,,,,6,,,
+,3.1,"Introduction, Macro definition and call, Features of Macro facility:
+Simple, parameterized, conditional and nested. Design of Two pass macro
+processor, data structures used.",,,,,,,,,,
+4,,,Loaders and Linkers,,,,,,6,,,
+,4.1,,"Introduction, functions of loaders, Relocation and Linking concept,",,,,,,,,,
+,,,"Different loading schemes: Relocating loader, Direct Linking Loader,",,,,,,,,,
+,,,Dynamic linking and loading.,,,,,,,,,
+5,,,Compilers: Analysis Phase,,,,,,10,,,
+,5.1,"Introduction to compilers, Phases of compilers:
+Lexical Analysis- Role of Finite State Automata in Lexical Analysis,
+Design of Lexical analyzer, data structures used.",,,,,,,,,,
+,,"Syntax Analysis- Role of Context Free Grammar in Syntax analysis,
+Types of Parsers: Top down parser- LL(1), Bottom up parser- SR Parser,
+Operator precedence parser, SLR.
+Semantic Analysis, Syntax directed definitions.",,,,,,,,,,
+6,,,Compilers: Synthesis phase,,8,,,,,,,
+,6.1,"Intermediate Code Generation: Types of Intermediate codes: Syntax
+tree, Postfix notation, three address codes: Triples and Quadruples,
+indirect triple. Code Optimization: Need and sources of optimization,
+Code optimization techniques: Machine Dependent and Machine
+Independent. Code Generation: Issues in the design of code generator,
+code generation algorithm. Basic block and flow graph.",,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"D. M Dhamdhere: Systems programming and Operating Systems, Tata McGraw Hill,
+Revised Second Edition",,,,,,,,,,,
+2,,"A. V. Aho, R. Shethi, Monica Lam, J.D. Ulman: Compilers Principles, Techniques and",,,,,,,,,,
+,,"Tools, Pearson Education, Second Edition.",,,,,,,,,,
+3,,"J. J. Donovan: Systems Programming Tata McGraw Hill,",Edition 1991,,,,,,,,,
+References:,,,,,,,,,,,,
+1,,"John R. Levine, Tony Mason & Doug Brown, Lex & YACC, O ‘Reilly publication, second",,,,,,,,,,
+,,Edition,,,,,,,,,,
+2,,"D, M .Dhamdhere ,Compiler construction 2e, Macmillan publication, second edition .",,,,,,,,,,
+3,,"Kenneth C. Louden ,Compiler construction: principles and practices, Cengage Learning",,,,,,,,,,
+4,,"Leland L. Beck, System software: An introduction to system programming, Pearson",,,,,,,,,,
+,,"publication, Third Edition",,,,,,,,,,
+Useful Links for E-resources:,,,,,,,,,,,,
+1,http://www.nptelvideos.in/2012/11/compiler-design.html,,,,,,,,,,,
+2,https://www.coursera.org/lecture/nand2tetris2/unit-4-1-syntax-analysis-5pC2Z,,,,,,,,,,,
+Assessment:,,,,,,,,,,,,
+Internal Assessment:,,,,,,,,,,,,
+"Assessment consists of two class tests of 20 marks each. The first -class test is to be conducted
+when approx. 40% syllabus is completed and the second-class test when an additional 40%
+syllabus is completed. Duration of each test shall be one hour.",,,,,,,,,,,,
+End Semester Theory Examination:,,,,,,,,,,,,
+1,Question paper will comprise a total of six questions.,,,,,,,,,,,
+2,All question carries equal marks,,,,,,,,,,,
+3,"Questions will be mixed in nature (for example supposed Q.2 has part (a) from module 3
+then part (b) will be from any module other than module 3)",,,,,,,,,,,
+4,Only Four questions need to be solved.,,,,,,,,,,,
+5,"In question paper weightage of each module will be proportional to number of respective
+lecture hours as mentioned in the syllabus.",,,,,,,,,,,
+Course Code:,Course Title,Credit,,,,,,,,,,
+CSC602,Cryptography & System Security,3,,,,,,,,,,
+Prerequisite: Computer Networks,,,,,,,,,,,,
+Course Objectives:,,,,,,,,,,,,
+1,"To introduce classical encryption techniques and concepts of modular arithmetic and
+number theory.",,,,,,,,,,,
+2,"To explore the working principles and utilities of various cryptographic algorithms
+including secret key cryptography, hashes and message digests, and public key algorithms",,,,,,,,,,,
+3,"To explore the design issues and working principles of various authentication protocols, PKI
+standards and various secure communication standards including Kerberos, IPsec, and
+SSL/TLS.",,,,,,,,,,,
+4,"To develop the ability to use existing cryptographic utilities to build programs for secure
+communication",,,,,,,,,,,
+Course Outcomes:,,,,,,,,,,,,
+1,"Understand system security goals and concepts, classical encryption techniques and acquire
+fundamental knowledge on the concepts of modular arithmetic and number theory",,,,,,,,,,,
+2,"Understand, compare and apply different encryption and decryption techniques to solve
+problems related to confidentiality and authentication",,,,,,,,,,,
+3,"Apply different message digest and digital signature algorithms to verify integrity and
+achieve authentication and design secure applications",,,,,,,,,,,
+4,"Understand network security basics, analyse different attacks on networks and evaluate the
+performance of firewalls and security protocols like SSL, IPSec, and PGP",,,,,,,,,,,
+5,Analyse and apply system security concept to recognize malicious code,,,,,,,,,,,
+Module,,Content,Hrs,,,,,,,,,
+1,,Introduction - Number Theory and Basic Cryptography,8,,,,,,,,,
+,1.1,"Security Goals, Attacks, Services and Mechanisms, Techniques. Modular
+Arithmetic: Euclidean Algorithm, Fermat‘s and Euler‘s theorem",,,,,,,,,,
+,1.2,"Classical Encryption techniques, Symmetric cipher model, mono-
+alphabetic and polyalphabetic substitution techniques: Vigenere cipher,
+playfair cipher, Hill cipher, transposition techniques: keyed and keyless
+transposition ciphers",,,,,,,,,,
+2,,Symmetric and Asymmetric key Cryptography and key Management,11,,,,,,,,,
+,2.1,"Block cipher principles, block cipher modes of operation, DES,
+Double DES, Triple DES, Advanced Encryption Standard (AES), Stream
+Ciphers: RC4 algorithm.",,,,,,,,,,
+,2.2,"Public key cryptography: Principles of public key cryptosystems- The
+RSA Cryptosystem, The knapsack cryptosystem",,,,,,,,,,
+,2.3,"Symmetric Key Distribution: KDC, Needham-schroeder protocol.
+Kerberos: Kerberos Authentication protocol, Symmetric key agreement:
+Diffie Hellman, Public key Distribution: Digital Certificate: X.509, PKI",,,,,,,,,,
+3,,Cryptographic Hash Functions,3,,,,,,,,,
+,3.1,"Cryptographic hash functions, Properties of secure hash function, MD5,
+SHA-1, MAC, HMAC, CMAC.",,,,,,,,,,
+4,,Authentication Protocols & Digital Signature Schemes,5,,,,,,,,,
+,4.1,"User Authentication, Entity Authentication: Password Base, Challenge
+Response Based",,,,,,,,,,
+,4.2,"Digital Signature, Attacks on Digital Signature, Digital Signature Scheme:
+RSA",,,,,,,,,,
+5,,Network Security and Applications,9,,,,,,,,,
+,5.1,"Network security basics: TCP/IP vulnerabilities (Layer wise), Network
+Attacks: Packet Sniffing, ARP spoofing, port scanning, IP spoofing",,,,,,,,,,
+,5.2,"Denial of Service: DOS attacks, ICMP flood, SYN flood, UDP flood,
+Distributed Denial of Service",,,,,,,,,,
+,5.3,"Internet Security Protocols: PGP, SSL, IPSEC. Network security: IDS,
+Firewalls",,,,,,,,,,
+6,,System Security,3,,,,,,,,,
+,6.1,"Buffer Overflow, malicious Programs: Worms and Viruses, SQL injection",,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"William Stallings, “Cryptography and Network Security, Principles and Practice”, 6th
+Edition, Pearson Education, March 2013",,,,,,,,,,,
+2,"Behrouz A. Ferouzan, “Cryptography & Network Security”, Tata McGraw Hill",,,,,,,,,,,
+3,"Behrouz A. Forouzan & Debdeep Mukhopadhyay, “Cryptography and Network
+Security” 3rd Edition, McGraw Hill",,,,,,,,,,,
+Referecebooks:,,,,,,,,,,,,
+1,"Bruce Schneier, “Applied Cryptography, Protocols Algorithms and Source Code in C”,
+Second Edition, Wiley.",,,,,,,,,,,
+2,"Atul Kahate, “Cryptography and Network Security”, Tata McGraw-Hill Education, 2003.",,,,,,,,,,,
+3,"Eric Cole, “Network Security Bible”, Second Edition, Wiley, 2011.",,,,,,,,,,,
+Assessment:,,,,,,,,,,,,
+Internal Assessment:,,,,,,,,,,,,
+"Assessment consists of two class tests of 20 marks each. The first class test is to be conducted
+when approx. 40% syllabus is completed and second class test when additional 40% syllabus is
+completed. Duration of each test shall be one hour.",,,,,,,,,,,,
+End Semester Theory Examination:,,,,,,,,,,,,
+1,Question paper will comprise of total six questions.,,,,,,,,,,,
+2,All question carries equal marks,,,,,,,,,,,
+3,"Questions will be mixed in nature (for example supposed Q.2 has part (a) from module 3
+then part (b) will be from any module other than module 3)",,,,,,,,,,,
+4,Only Four question need to be solved.,,,,,,,,,,,
+5,"In question paper weightage of each module will be proportional to number of respective
+lecture hours as mention in the syllabus.",,,,,,,,,,,
+Useful Links,,,,,,,,,,,,
+1,"https://github.com/cmin764/cmiN/blob/master/FII/L3/SI/book/W.Stallings%20-
+%20Cryptography%20and%20Network%20Security%206th%20ed.pdf",,,,,,,,,,,
+2,https://docs.google.com/file/d/0B5F6yMKYDUbrYXE4X1ZCUHpLNnc/view,,,,,,,,,,,
+Course Code:,Course Title,Credit,,,,,,,,,,
+CSC603,Mobile Computing,3,,,,,,,,,,
+Prerequisite: Computer Networks,,,,,,,,,,,,
+Course Objectives:,,,,,,,,,,,,
+1,"To introduce the basic concepts and principles in mobile computing. This includes major
+techniques involved, and networks & systems issues for the design and implementation of
+mobile computing systems and applications.",,,,,,,,,,,
+2,To explore both theoretical and practical issues of mobile computing.,,,,,,,,,,,
+3,"To provide an opportunity for students to understand the key components and technologies
+involved and to gain hands-on experiences in building mobile applications.",,,,,,,,,,,
+"Course Outcomes: On successful completion of course, learner will be able to",,,,,,,,,,,,
+1,"To identify basic concepts and principles in computing, cellular architecture.",,,,,,,,,,,
+2,To describe the components and functioning of mobile networking.,,,,,,,,,,,
+3,To classify variety of security techniques in mobile network.,,,,,,,,,,,
+4,To apply the concepts of WLAN for local as well as remote applications.,,,,,,,,,,,
+5,To describe Long Term Evolution (LTE) architecture and its interfaces.,,,,,,,,,,,
+Module,,Content,Hrs,,,,,,,,,
+1,,Introduction to Mobile Computing,4,,,,,,,,,
+,1.1,"Introduction to Mobile Computing, Telecommunication Generations,
+Cellular systems,",,,,,,,,,,
+,1.2,"Electromagnetic Spectrum, Antenna, Signal Propagation, Signal
+Characteristics, Multiplexing, Spread Spectrum: DSSS & FHSS, Co-
+channel interference",,,,,,,,,,
+2,,GSM Mobile services,8,,,,,,,,,
+,2.1,"GSM Mobile services, System Architecture, Radio interface, Protocols,
+Localization and Calling, Handover, security (A3, A5 & A8)",,,,,,,,,,
+,2.2,GPRS system and protocol architecture,,,,,,,,,,
+,2.3,"UTRAN, UMTS core network; Improvements on Core Network,",,,,,,,,,,
+3,,Mobile Networking,8,,,,,,,,,
+,3.1,"Medium Access Protocol, Internet Protocol and Transport layer",,,,,,,,,,
+,3.2,"Mobile IP: IP Packet Delivery, Agent Advertisement and Discovery,
+Registration, Tunneling and Encapsulation, Reverse Tunneling.",,,,,,,,,,
+,3.3,"Mobile TCP: Traditional TCP, Classical TCP Improvements like Indirect
+TCP, Snooping TCP & Mobile TCP, Fast Retransmit/ Fast Recovery,
+Transmission/Timeout Freezing, Selective Retransmission",,,,,,,,,,
+4,,Wireless Local Area Networks,6,,,,,,,,,
+,4.1,"Wireless Local Area Networks: Introduction, Infrastructure and ad-hoc
+network",,,,,,,,,,
+,4.2,"IEEE 802.11:System architecture , Protocol architecture , Physical layer,
+Medium access control layer, MAC management, 802.11a, 802.11b
+standard",,,,,,,,,,
+,4.3,"Wi-Fi security : WEP ,WPA, Wireless LAN Threats , Securing Wireless
+Networks",,,,,,,,,,
+,4.4,"Bluetooth: Introduction, User Scenario, Architecture, protocol stack",,,,,,,,,,
+5,,Mobility Management,6,,,,,,,,,
+,5.1,"Mobility Management : Introduction, IP Mobility, Optimization, IPv6",,,,,,,,,,
+,5.2,"Macro Mobility : MIPv6, FMIPv6",,,,,,,,,,
+,5.3,"Micro Mobility: CellularIP, HAWAII, HMIPv6",,,,,,,,,,
+6,,Long-Term Evolution (LTE) of 3GPP,7,,,,,,,,,
+,6.1,"Long-Term Evolution (LTE) of 3GPP : LTE System Overview,
+Evolution from UMTS to LTE",,,,,,,,,,
+,6.2,"LTE/SAE Requirements, SAE Architecture",,,,,,,,,,
+,6.3,"EPS: Evolved Packet System, E-UTRAN, Voice over LTE (VoLTE),
+Introduction to LTE-Advanced",,,,,,,,,,
+,6.4,"Self Organizing Network (SON-LTE), SON for Heterogeneous Networks
+(HetNet), Comparison between Different Generations (2G, 3G, 4G and 5G),
+Introduction to 5G",,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"Jochen Schilller, “Mobile Communication”, Addision wisely, Pearson Education",,,,,,,,,,,
+2,"William Stallings “Wireless Communications & Networks”, Second Edition, Pearson
+Education",,,,,,,,,,,
+3,"Christopher Cox, “An Introduction to LTE: LTE, LTE-Advanced, SAE and 4G
+Mobile Communications”, Wiley publications",,,,,,,,,,,
+4,"Raj Kamal, “Mobile Computing”, 2/e, Oxford University Press-New",,,,,,,,,,,
+References:,,,,,,,,,,,,
+1,"Seppo Hamalainen, Henning Sanneck , Cinzia Sartori, “LTE Self-Organizing
+Networks (SON): Network Management Automation for Operational Efficiency”,
+Wiley publications",,,,,,,,,,,
+2,"Ashutosh Dutta, Henning Schulzrinne “Mobility Protocols and Handover
+Optimization: Design, Evaluation and Application”, IEEE Press, Wiley Publication",,,,,,,,,,,
+3,"Michael Gregg, “Build your own security lab”, Wiley India edition",,,,,,,,,,,
+4,"Dipankar Raychaudhuri, Mario Gerla, “Emerging Wireless Technologies and the
+Future Mobile Internet”, Cambridge",,,,,,,,,,,
+5,"Andreas F. Molisch, “Wireless Communications”, Second Edition, Wiley Publication",,,,,,,,,,,
+Assessment:,,,,,,,,,,,,
+Internal Assessment:,,,,,,,,,,,,
+"Assessment consists of two class tests of 20 marks each. The first class test is to be conducted
+when approx. 40% syllabus is completed and second class test when additional 40% syllabus is
+completed. Duration of each test shall be one hour.",,,,,,,,,,,,
+End Semester Theory Examination:,,,,,,,,,,,,
+1,Question paper will comprise of total six questions.,,,,,,,,,,,
+2,All question carries equal marks,,,,,,,,,,,
+3,"Questions will be mixed in nature (for example supposed Q.2 has part (a) from module 3
+then part (b) will be from any module other than module 3)",,,,,,,,,,,
+4,Only Four question need to be solved.,,,,,,,,,,,
+5,"In question paper weightage of each module will be proportional to number of respective
+lecture hours as mention in the syllabus.",,,,,,,,,,,
+Useful Links,,,,,,,,,,,,
+1,,https://www.coursera.org/learn/smart-device-mobile-emerging-technologies,,,,,,,,,,
+2,https://nptel.ac.in/courses/106/106/106106167/,,,,,,,,,,,
+Course Code:,Course Title,Credit,,,,,,,,,,
+CSC604,Artificial Intelligence,3,,,,,,,,,,
+"Prerequisite: Discrete Mathematics, Data Structures",,,,,,,,,,,,
+Course Objectives:,,,,,,,,,,,,
+1,"To conceptualize the basic ideas and techniques underlying the design of intelligent
+systems.",,,,,,,,,,,
+2,"To make students understand and Explore the mechanism of mind that enables intelligent
+thought and action.",,,,,,,,,,,
+3,To make students understand advanced representation formalism and search techniques.,,,,,,,,,,,
+4,To make students understand how to deal with uncertain and incomplete information.,,,,,,,,,,,
+"Course Outcomes: At the end of the course, the students will be able to",,,,,,,,,,,,
+1,"Ability to develop a basic understanding of AI building blocks presented in intelligent
+agents.",,,,,,,,,,,
+2,"Ability to choose an appropriate problem solving method and knowledge representation
+technique.",,,,,,,,,,,
+3,"Ability to analyze the strength and weaknesses of AI approaches to knowledge– intensive
+problem solving.",,,,,,,,,,,
+4,"Ability to design models for reasoning with uncertainty as well as the use of unreliable
+information.",,,,,,,,,,,
+5,Ability to design and develop AI applications in real world scenarios.,,,,,,,,,,,
+Module,,Content,,,Hrs,,,,,,,
+1,,Introduction to Artificial Intelligence,,,4,,,,,,,
+,1.1,"Introduction, History of Artificial Intelligence, Intelligent Systems:
+Categorization of Intelligent System, Components of AI Program,
+Foundations of AI, Sub-areas of AI, Applications of AI, Current trends
+in AI.",,,,,,,,,,
+2,,Intelligent Agents,,,4,,,,,,,
+,2.1,"Agents and Environments, The concept of rationality, The nature of
+environment, The structure of Agents, Types of Agents, Learning
+Agent.",,,,,,,,,,
+,2.2,"Solving problem by Searching: Problem Solving Agent, Formulating
+Problems, Example Problems.",,,,,,,,,,
+3,,Problem solving,,,10,,,,,,,
+,3.1,"Uninformed Search Methods: Breadth First Search (BFS), Depth First
+Search (DFS), Depth Limited Search, Depth First Iterative Deepening
+(DFID), Informed Search Methods: Greedy best first Search, A*
+Search, Memory bounded heuristic Search.",,,,,,,,,,
+,3.2,"Local Search Algorithms and Optimization Problems: Hill climbing
+search Simulated annealing, Genetic algorithms.",,,,,,,,,,
+,3.3,,"Adversarial Search: Game Playing, Min-Max Search, Alpha Beta",,,,,,,,,
+,,,Pruning,,,,,,,,,
+4,,Knowledge and Reasoning,,,12,,,,,,,
+,4.1,"Knowledge based Agents, Brief Overview of propositional logic, First
+Order Logic: Syntax and Semantic, Inference in FOL, Forward
+chaining, backward Chaining.",,,,,,,,,,
+,4.2,"Knowledge Engineering in First-Order Logic, Unification, Resolution",,,,,,,,,,
+,4.3,"Uncertain Knowledge and Reasoning: Uncertainty, Representing
+knowledge in an uncertain domain, The semantics of belief network,
+Simple Inference in belief network",,,,,,,,,,
+5,,Planning and Learning,5,,,,,,,,,
+,5.1,"The planning problem, Planning with state space search, Partial order
+planning, Hierarchical planning, Conditional Planning.",,,,,,,,,,
+,5.2,"Learning: Forms of Learning, Theory of Learning, PAC learning.
+Introduction to statistical learning (Introduction only)
+Introduction to reinforcement learning: Learning from Rewards,
+Passive Reinforcement Learning, Active reinforcement Learning",,,,,,,,,,
+6,,AI Applications,4,,,,,,,,,
+,,"A. Introduction to NLP- Language models, Grammars, Parsing
+B. Robotics - Robots, Robot hardware, Problems Robotics can
+solve
+C. AI applications in Healthcare, Retail, Banking",,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"Stuart J. Russell and Peter Norvig, ""Artificial Intelligence: A Modern Approach”, Fourth
+Edition"" Pearson Education, 2020.",,,,,,,,,,,
+2,"Saroj Kaushik, “Artificial Intelligence”, Cengage Learning, First edition, 2011",,,,,,,,,,,
+3,"George F Luger, “Artificial Intelligence” Low Price Edition, Fourth edition, Pearson
+Education.,2005",,,,,,,,,,,
+References:,,,,,,,,,,,,
+1,"Nils J. Nilsson, Principles of Artificial Intelligence, Narosa Publication.",,,,,,,,,,,
+2,"Deepak Khemani, A First Course in Artificial Intelligence, McGraw Hill Publication",,,,,,,,,,,
+3,"Patrick H. Winston, Artificial Intelligence, 3rd edition, Pearson Education.",,,,,,,,,,,
+4,"Elaine Rich and Kevin Knight, ""Artificial Intelligence”, Third Edition, McGraw Hill
+Education,2017.",,,,,,,,,,,
+Assessment:,,,,,,,,,,,,
+Internal Assessment:,,,,,,,,,,,,
+"Assessment consists of two class tests of 20 marks each. The first class test is to be conducted
+when approx. 40% syllabus is completed and the second class test when an additional 40%
+syllabus is completed. Duration of each test shall be one hour.",,,,,,,,,,,,
+End Semester Theory Examination:,,,,,,,,,,,,
+1,Question paper will comprise a total of six questions.,,,,,,,,,,,
+2,All question carries equal marks,,,,,,,,,,,
+3,"Questions will be mixed in nature (for example supposed Q.2 has part (a) from module 3
+then part (b) will be from any module other than module 3)",,,,,,,,,,,
+4,Only Four questions need to be solved.,,,,,,,,,,,
+5,"In question paper weightage of each module will be proportional to number of respective
+lecture hours as mentioned in the syllabus.",,,,,,,,,,,
+Useful Links,,,,,,,,,,,,
+1,https://nptel.ac.in/courses/106/105/106105078/,,,,,,,,,,,
+2,"https://thestempedia.com/blog/simple-ai-and-machine-learning-projects-for-students-
+and-beginners/",,,,,,,,,,,
+3,https://nptel.ac.in/courses/106/105/106105079/,,,,,,,,,,,
+Course Code:,Course Title,Credit,,,,,,,,,,
+CSDLO6011,Internet of Things,3,,,,,,,,,,
+"Prerequisite: C Programming, Digital Logic and Computer Architecture, Microprocessor,
+Computer Networks.",,,,,,,,,,,,
+Course Objectives:,,,,,,,,,,,,
+1,"To equip students with the fundamental knowledge and basic technical competence in the
+field of Internet of Things (IoT).",,,,,,,,,,,
+2,"To emphasize on core IoT functional Stack to build assembly language programs. To learn
+the Core IoT Functional Stack.",,,,,,,,,,,
+3,"To understand the different common application protocols for IoT and apply IoT knowledge
+to key industries that IoT is revolutionizing.",,,,,,,,,,,
+4,"To examines various IoT hardware items and software platforms used in projects for each
+platform that can be undertaken by a beginner, hobbyist, student, academician, or researcher
+to develop useful projects or products.",,,,,,,,,,,
+"Course Outcomes: On the completion of the course, learners will be able to:",,,,,,,,,,,,
+1,Understand the concepts of IoT and the Things in IoT.,,,,,,,,,,,
+2,Emphasize core IoT functional Stack and understand application protocols for IoT.,,,,,,,,,,,
+3,Apply IoT knowledge to key industries that IoT is revolutionizing.,,,,,,,,,,,
+4,Examines various IoT hardware items and software platforms used in projects.,,,,,,,,,,,
+Module,,Content,Hrs,,,,,,,,,
+1,,Introduction to Internet of Things (IoT),7,,,,,,,,,
+,1.1,What is IoT? - IoT and Digitization,,,,,,,,,,
+,1.2,"IoT Impact – Connected Roadways, Connected Factory, Smart Connected
+Buildings, Smart Creatures",,,,,,,,,,
+,1.3,"Convergence of IT and OT, IoT Challenges",,,,,,,,,,
+,1.4,The oneM2M IoT Standardized Architecture,,,,,,,,,,
+,1.5,The IoT World Forum (IoTWF) Standardized Architecture,,,,,,,,,,
+,1.6,"IoT Data Management and Compute Stack – Design considerations and Data
+related problems, Fog Computing, Edge Computing, The Hierarchy of Edge, Fog
+and Cloud",,,,,,,,,,
+2,,Things in IoT,7,,,,,,,,,
+,2.1,"Sensors/Transducers – Definition, Principles, Classifications, Types,
+Characteristics and Specifications",,,,,,,,,,
+,2.2,"Actuators -– Definition, Principles, Classifications, Types, Characteristics and
+Specifications",,,,,,,,,,
+,2.3,"Smart Object – Definition, Characteristics and Trends",,,,,,,,,,
+,2.4,"Sensor Networks – Architecture of Wireless Sensor Network, Network Topologies",,,,,,,,,,
+,2.5,"Enabling IoT Technologies - Radio Frequency Identification Technology, Micro-
+Electro-Mechanical Systems (MEMS), NFC (Near Field Communication),
+Bluetooth Low Energy (BLE), LTE-A (LTE Advanced), IEEE 802.15.4–
+Standardization and Alliances, ZigBee.",,,,,,,,,,
+3,,The Core IoT Functional Stack,6,,,,,,,,,
+,3.1,Layer 1 – Things: Sensors and Actuators Layer,,,,,,,,,,
+,3.2,"Layer 2 – Communications Network Layer, Access Network Sublayer, Gateways
+and Backhaul Sublayer, Network Transport Sublayer, IoT Network Management
+Sublayer",,,,,,,,,,
+,3.3,"Layer 3 – Applications and Analytics Layer, Analytics Vs. Control Applications,
+Data Vs. Network Analytics, Data Analytics Vs. Business Benefits, Smart Services",,,,,,,,,,
+4,,Application Protocols for IoT,7,,,,,,,,,
+,4.1,The Transport Layer,,,,,,,,,,
+,4.2,IoT Application Transport Methods,,,,,,,,,,
+,4.3,Application Layer Protocol Not Present,,,,,,,,,,
+,4.4,"SCADA - Background on SCADA, Adapting SCADA for IP, Tunneling Legacy
+SCADA over IP Networks, SCADA Protocol Translation, SCADA Transport over
+LLNs with MAP-T,",,,,,,,,,,
+,4.5,Generic Web-Based Protocols,,,,,,,,,,
+,4.6,IoT Application Layer Protocols – CoAP and MQTT,,,,,,,,,,
+5,,Domain Specific IoTs,6,,,,,,,,,
+,5.1,"Home Automation – Smart Lighting, Smart Appliances, Intrusion Detection,
+Smoke/Gas Detectors",,,,,,,,,,
+,5.2,"Cities – Smart Parking, Smart Lighting, Smart Roads, Structural Health
+Monitoring, Surveillance",,,,,,,,,,
+,5.3,"Environment – Weather Monitoring, Air Pollution Monitoring, Noise Pollution
+Monitoring, Forest Fire Detection, River Floods Detection",,,,,,,,,,
+,5.4,"Energy – Smart Grids, Renewable Energy Systems, Prognostics",,,,,,,,,,
+,5.5,"Retail – Inventory Management, Smart Payments, Smart Vending Machines",,,,,,,,,,
+,5.6,"Logistics – Route Generation & Scheduling, Fleet Tracking, Shipment Monitoring",,,,,,,,,,
+,5.7,"Agriculture – Smart Irrigation, Green House Control",,,,,,,,,,
+,5.8,"Industry – Machine Diagnostics & Prognosis, Indoor Air Quality Monitoring",,,,,,,,,,
+,5.9,"Health & Lifestyle – Health & Fitness Monitoring, Wearable Electronics",,,,,,,,,,
+6,,Create your own IoT,6,,,,,,,,,
+,6.1,"IoT Hardware - Arduino, Raspberry Pi, ESP32, Cloudbit/Littlebits, Particle
+Photon, Beaglebone Black.",,,,,,,,,,
+,6.2,"IoT Software - languages for programming IoT hardware, for middleware
+applications and API development, for making front ends, REST and JSON-LD",,,,,,,,,,
+,6.3,A comparison of IoT boards and platforms in terms of computing,,,,,,,,,,
+,6.4,"A comparison of IoT boards and platforms in terms of development environments
+and communication standards",,,,,,,,,,
+,6.5,A comparison of boards and platforms in terms of connectivity,,,,,,,,,,
+,6.6,A comparison of IoT software platforms,,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"David Hanes, Gonzalo Salgueiro, Patrick Grossetete, Rob Barton, Jerome Henry, “IoT
+Fundamentals – Networking Technologies, Protocols, and Use Cases for the Internet
+of Things”, 1st Edition, Published by Pearson Education, Inc, publishing as Cisco Press,
+2017.",,,,,,,,,,,
+2,"Hakima Chaouchi, “The Internet of Things - Connecting Objects to the Web”, 1st
+Edition, Wiley, 2010.",,,,,,,,,,,
+3,"Perry Lea, “Internet of things For Architects”, 1st Edition, Packt Publication, 2018",,,,,,,,,,,
+4,"Arshdeep Bahga, Vijay Madisetti, “Internet of Things – Hands-On Approach”, 2nd
+Edition, Universities Press, 2016.",,,,,,,,,,,
+References:,,,,,,,,,,,,
+1,"Adrian McEwen & Hakim Cassimally, “Designing the Internet of Things”, 1st Edition,
+Wiley, 2014.",,,,,,,,,,,
+2,"Donald Norris, “Raspberry Pi – Projects for the Evil Genius”, 2nd Edition, McGraw Hill,
+2014.",,,,,,,,,,,
+3,"Anand Tamboli ,“Build Your Own IoT Platform”, 1st Edition, Apress, 2019.",,,,,,,,,,,
+Assessment:,,,,,,,,,,,,
+Internal Assessment:,,,,,,,,,,,,
+"Assessment consists of two class tests of 20 marks each. The first-class test is to be conducted
+when approx. 40% syllabus is completed and second-class test when additional 40% syllabus is
+completed. Duration of each test shall be one hour.",,,,,,,,,,,,
+End Semester Theory Examination:,,,,,,,,,,,,
+1,Question paper will comprise of total six questions.,,,,,,,,,,,
+2,All question carries equal marks,,,,,,,,,,,
+3,"Questions will be mixed in nature (for example supposed Q.2 has part (a) from module 3
+then part (b) will be from any module other than module 3)",,,,,,,,,,,
+4,Only Four question need to be solved.,,,,,,,,,,,
+5,"In question paper weightage of each module will be proportional to number of respective
+lecture hours as mention in the syllabus.",,,,,,,,,,,
+Useful Links,,,,,,,,,,,,
+1,https://nptel.ac.in/courses/106/105/106105166/,,,,,,,,,,,
+2,https://nptel.ac.in/courses/108/108/108108098/,,,,,,,,,,,
+3,https://nptel.ac.in/courses/106/105/106105195/,,,,,,,,,,,
+4,https://www.coursera.org/specializations/IoT,,,,,,,,,,,
+Course Code:,Course Title,Credit,,,,,,,,,,
+CSDLO6012,Digital Signal & Image Processing,3,,,,,,,,,,
+Prerequisite: Applied Engineering Mathematics,,,,,,,,,,,,
+Course Objectives:,,,,,,,,,,,,
+1,To understand the fundamental concepts of digital signal processing and Image processing,,,,,,,,,,,
+2,To explore DFT for 1-D and 2-D signal and FFT for 1-D signal,,,,,,,,,,,
+3,To apply processing techniques on 1-D and Image signals,,,,,,,,,,,
+4,To apply digital image processing techniques for edge detection,,,,,,,,,,,
+"Course Outcomes: On successful completion of course, learners will be able to:",,,,,,,,,,,,
+1,Understand the concept of DT Signal and DT Systems,,,,,,,,,,,
+2,Classify and analyze discrete time signals and systems,,,,,,,,,,,
+3,Implement Digital Signal Transform techniques DFT and FFT,,,,,,,,,,,
+4,Use the enhancement techniques for digital Image Processing,,,,,,,,,,,
+5,Apply image segmentation techniques,,,,,,,,,,,
+"Module
+No.","Unit
+No.",Topic details,Hrs.,,,,,,,,,
+1.0,,Discrete-Time Signal and Discrete-Time System,10,,,,,,,,,
+,1.1,"Introduction to Digital Signal Processing, Sampling and
+Reconstruction, Standard DT Signals, Concept of Digital
+Frequency, Representation of DT signal using Standard DT Signals,
+Signal Manipulations (shifting, reversal, scaling, addition,
+multiplication).",,,,,,,,,,
+,1.2,"Classification of Discrete-Time Signals, Classification of Discrete-
+Systems",,,,,,,,,,
+,1.3,"Linear Convolution formulation for 1-D signal (without
+mathematical proof), Circular Convolution (without
+mathematical proof), Linear convolution using Circular
+Convolution. Auto and Cross Correlation formula evaluation,
+Concept of LTI system, Output of DT system using Time Domain
+Linear Convolution.",,,,,,,,,,
+2.0,,Discrete Fourier Transform,05,,,,,,,,,
+,2.1,"Introduction to DTFT, DFT, Relation between DFT and DTFT,
+IDFT",,,,,,,,,,
+,2.2,"Properties of DFT without mathematical proof (Scaling and
+Linearity, Periodicity, Time Shift and Frequency Shift, Time
+Reversal, Convolution Property and Parseval’s Energy
+Theorem). DFT computation using DFT properties.",,,,,,,,,,
+,2.3,"Convolution of long sequences, Introduction to 2-D DFT",,,,,,,,,,
+3.0,,Fast Fourier Transform,04,,,,,,,,,
+,3.1,"Need of FFT, Radix-2 DIT-FFT algorithm,",,,,,,,,,,
+,3.2,"DIT-FFT Flow graph for N=4 and 8, Inverse FFT algorithm.",,,,,,,,,,
+,3.3,Spectral Analysis using FFT,,,,,,,,,,
+4.0,,Digital Image Fundamentals,05,,,,,,,,,
+,4.1,"Introduction to Digital Image, Digital Image Processing System,
+Sampling and Quantization",,,,,,,,,,
+,4.2,"Representation of Digital Image, Connectivity",,,,,,,,,,
+,4.3,"Image File Formats: BMP, TIFF and JPEG.",,,,,,,,,,
+5.0,,Image Enhancement in Spatial domain,09,,,,,,,,,
+,5.1,"Gray Level Transformations, Zero Memory Point Operations,",,,,,,,,,,
+,5.2,"Histogram Processing, Histogram equalization.",,,,,,,,,,
+,5.3,,,,,,,,,,,
+,,"Neighborhood processing, Image averaging, Image Subtraction,",,,,,,,,,,
+,,"Smoothing Filters - Low pass averaging, Sharpening Filters-High",,,,,,,,,,
+,,"Pass Filter, High Boost Filter, Median Filter for reduction of noise",,,,,,,,,,
+,,,,,,,,,,,,
+6.0,,Image Segmentation,06,,,,,,,,,
+,6.1,"Fundamentals, Segmentation based on Discontinuities",,,,,,,,,,
+,,and Similarities,,,,,,,,,,
+,6.2,"Point, line and Edge Detection, Image edge detection using Robert,",,,,,,,,,,
+,,"Prewitt and Sobel masks, Image edge Detection using Laplacian mask",,,,,,,,,,
+,6.3,"Region based segmentation: Region Growing, Region Splitting",,,,,,,,,,
+,,and Merging,,,,,,,,,,
+,,,,,,,,,,,,
+,,Total,39,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"John G. Proakis, Dimitris and G .Manolakis, “Digital Signal Processing: Principles,
+Algorithms, and Applications”, 4th Edition, Pearson Education, 2007",,,,,,,,,,,
+2,"A. Anand Kumar, “Digital Signal Processing”, 2nd Edition, PHI Learning Pvt. Ltd.
+2014.",,,,,,,,,,,
+3,"Rafel C. Gonzalez and Richard E. Woods, “Digital Image Processing”, Pearson
+Education Asia, 4th Edition, 2018.",,,,,,,,,,,
+4,"S. Sridhar, “Digital Image Processing”, 2nd Edition, Oxford University Press, 2012.",,,,,,,,,,,
+References:,,,,,,,,,,,,
+1,"Sanjit Mitra, “Digital Signal Processing: A Computer Based Approach”, 4th Edition,
+Tata McGraw Hill, 2013",,,,,,,,,,,
+2,"S. Salivahanan, A. Vallavaraj, and C. Gnanapriya, “Digital Signal Processing”, 2nd
+Edition, Tata McGraw Hill Publication, 2011.",,,,,,,,,,,
+3,"S. Jayaraman, E. Esakkirajan and T. Veerkumar, “Digital Image Processing”, 3rd
+Edition, Tata McGraw Hill Education Private Ltd, 2009.",,,,,,,,,,,
+4,"Anil K. Jain, “Fundamentals of Digital Image Processing”, 4th Edition, Prentice Hall
+of India Private Ltd,.1989",,,,,,,,,,,
+Assessment:,,,,,,,,,,,,
+Internal Assessment:,,,,,,,,,,,,
+"Assessment consists of two class tests of 20 marks each. The first class test is to be conducted
+when approx. 40% syllabus is completed and second class test when additional 50% syllabus
+is completed. Duration of each test shall be one hour.",,,,,,,,,,,,
+End Semester Theory Examination:,,,,,,,,,,,,
+1,Question paper will comprise of total six questions.,,,,,,,,,,,
+2,All question carries equal marks,,,,,,,,,,,
+3,"Questions will be mixed in nature (for example supposed Q.2 has part (a) from module 3
+then part (b) will be from any module other than module 3)",,,,,,,,,,,
+4,Only Four question need to be solved.,,,,,,,,,,,
+5,"In question paper weightage of each module will be proportional to number of respective
+lecture hours as mention in the syllabus.",,,,,,,,,,,
+Useful Links,,,,,,,,,,,,
+1,https://nptel.ac.in/courses/,,,,,,,,,,,
+2,https://swayam.gov.in,,,,,,,,,,,
+Course Code:,Course Title,Credit,,,,,,,,,,
+CSDLO6013,Quantitative Analysis,3,,,,,,,,,,
+Prerequisite: Applied Mathematics,,,,,,,,,,,,
+Course Objectives:,,,,,,,,,,,,
+1,Introduction to the basic concepts in Statistics,,,,,,,,,,,
+2,Understand concept of data collection & sampling methods.,,,,,,,,,,,
+3,"Introduction to Regression, Multiple Linear Regression",,,,,,,,,,,
+4,Draw interference using Statistical inference methods,,,,,,,,,,,
+5,Tests of hypotheses,,,,,,,,,,,
+Course Outcomes:,,,,,,,,,,,,
+1,Recognize the need of Statistics and Quantitative Analysis,,,,,,,,,,,
+2,Apply the data collection and the sampling methods.,,,,,,,,,,,
+3,"Analyze using concepts of Regression, Multiple Linear Regression",,,,,,,,,,,
+4,Formulate Statistical inference drawing methods.,,,,,,,,,,,
+5,Apply Testing of hypotheses,,,,,,,,,,,
+Module,Content,Hrs,,,,,,,,,,
+1,Introduction to Statistics,6,,,,,,,,,,
+,"Functions – Importance – Uses and Limitations of Statistics. Statistical data–
+Classification, Tabulation, Diagrammatic & Graphic representation of data",,,,,,,,,,,
+2,Data Collection & Sampling Methods,6,,,,,,,,,,
+,"Primary & Secondary data, Sources of data, Methods of collecting data.
+Sampling – Census & Sample methods –Methods of sampling, Probability
+Sampling and Non-Probability Sampling.",,,,,,,,,,,
+3,Introduction to Regression,8,,,,,,,,,,
+,"Mathematical and Statistical Equation – Meaning of Intercept and Slope –
+Error term – Measure for Model Fit –R2 – MAE – MAPE.",,,,,,,,,,,
+4,Introduction to Multiple Linear Regression,8,,,,,,,,,,
+,"Multiple Linear Regression Model, Partial Regression Coefficients, Testing
+Significance overall significance of Overall fit of the model, Testing for
+Individual Regression Coefficients",,,,,,,,,,,
+5,Statistical inference,6,,,,,,,,,,
+,"Random sample -Parametric point estimation unbiasedness and consistence
+- method of moments and method of maximum likelihood.",,,,,,,,,,,
+6,Tests of hypotheses,5,,,,,,,,,,
+,"Null and Alternative hypotheses. Types of errors. Neyman-Pearson lemma-
+MP and UMP tests.",,,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"Agarwal, B.L. (2006):-Basic Statistics. Wiley Eastern Ltd., New Delhi",,,,,,,,,,,
+2,"Gupta, S. P. (2011):-Statistical Methods. Sultanchand&Sons, New Delhi",,,,,,,,,,,
+3,"Sivathanupillai, M &Rajagopal, K. R. (1979):-Statistics for Economics Students.",,,,,,,,,,,
+4,"Hogg ,R.V. and Craig, A.T.(2006), An introduction to mathematical statistics, Amerind
+publications.",,,,,,,,,,,
+References:,,,,,,,,,,,,
+1,"Arora, P.N., SumeetArora, S. Arora (2007):- Comprehensive Statistical Methods. Sultan
+Chand, New Delhi",,,,,,,,,,,
+2,"Montgomery,D.C. ,Peck E.A, & Vining G.G.(2003). Introduction to Linear Regression
+Analysis. John Wiley and Sons,Inc.NY",,,,,,,,,,,
+3,"Mood AM, Graybill FA, and Boes, D.C.(1985), Introduction to the theory of statistics,
+McGrawhill Book Company, New Delhi.",,,,,,,,,,,
+4,"Kapur, J.N. and Saxena,H.C.(1970), Mathematical statistics, Sultan Chand & company, New
+Delhi..",,,,,,,,,,,
+Assessment:,,,,,,,,,,,,
+Internal Assessment:,,,,,,,,,,,,
+"Assessment consists of two class tests of 20 marks each. The first class test is to be conducted
+when approx. 40% syllabus is completed and second class test when additional 40% syllabus is
+completed. Duration of each test shall be one hour.",,,,,,,,,,,,
+End Semester Theory Examination:,,,,,,,,,,,,
+1,Question paper will comprise of total six questions.,,,,,,,,,,,
+2,All question carries equal marks,,,,,,,,,,,
+3,"Questions will be mixed in nature (for example supposed Q.2 has part (a) from module 3
+then part (b) will be from any module other than module 3)",,,,,,,,,,,
+4,Only Four question need to be solved.,,,,,,,,,,,
+5,"In question paper weightage of each module will be proportional to number of respective
+lecture hours as mention in the syllabus.",,,,,,,,,,,
+Lab Code,,,,,Lab Name,,,,Credit,,,
+CSL601,,,,,System Programming and Compiler Construction Lab,,,,1,,,
+,,,,,,,,,,,,
+"Prerequisite: Theoretical computer science, Operating system. Computer Organization and
+Architecture",,,,,,,,,,,,
+"Lab Outcomes: At the end of the course, the students will be able to",,,,,,,,,,,,
+,1,,Generate machine code by implementing two pass assemblers.,,,,,,,,,
+,2,,,Implement Two pass macro processor,,,.,,,,,
+,3,,,Parse the given input string by constructing Top down/Bottom-up parser,,,,.,,,,
+4,4,,"Identify and Validate tokens for given high level language and Implement synthesis phase of
+compiler.",,,,,,,,,
+,,,,compiler.,,,,,,,,
+,5,,,Explore LEX & YACC tools.,,,,,,,,
+Suggested List of Experiments,,,,,,,,,,,,
+Sr. No.,Title of Experiment,,,,,,,,,,,
+1,,Implementations of two pass Assembler.,,,,,,,,,,
+2,,Implementation of Two pass Macro Processor.,,,,,,,,,,
+3,,Implementation of Lexical Analyzer.,,,,,,,,,,
+4,,Implementation of Parser (Any one).,,,,,,,,,,
+5,,Implementation of Intermediate code generation phase of compiler.,,,,,,,,,,
+6,,Implementation of code generation phase of compiler.,,,,,,,,,,
+7,,"Study and implement experiments on LEX, YACC.",,,,,,,,,,
+Reference Books:,,,,,,,,,,,,
+1,"Andrew W. Appel Princeton University. Jens Palsberg Modern Compiler.
+Implementation in Java, Second Edition. Purdue University. CAMBRIDGE
+University press @2002.",,,,,,,,,,,
+2,"Charles N. Fischer, Richard J. LeBlanc Crafting a compiler with C , pearson
+Education 2007",,,,,,,,,,,
+Term Work:,,,,,,,,,,,,
+1,Term work should consist of experiments based on suggested experiment list.,,,,,,,,,,,
+2,"Journal must include at least 2 assignments on content of theory and practical of “System
+Programming and Compiler Construction”",,,,,,,,,,,
+3,"The final certification and acceptance of term work ensures that satisfactory performance of
+laboratory work and minimum passing marks in term work.",,,,,,,,,,,
+4,"The distribution of marks for term work shall be as follows:
+Laboratory work (experiments/case studies): ....................................(15) Marks.
+Assignment: ...................................................................................... (05) Marks.
+Attendance ......................................................................................... (05) Marks
+TOTAL: .............................................................................................. (25) Marks.",,,,,,,,,,,
+Oral & Practical exam will be based on the above and CSC601 syllabus.,,,,,,,,,,,,
+Lab Code,Lab Name,Credit,,,,,,,,,,
+CSL602,Cryptography & System Security Lab,1,,,,,,,,,,
+Prerequisite: Computer Network,,,,,,,,,,,,
+Lab Objectives:,,,,,,,,,,,,
+1,,,,To apply various encryption techniques,,,,,,,,
+2,,,,To study and implement various security mechanism,,,,,,,,
+3,,,,To explore the network security concept and tools,,,,,,,,
+"Lab Outcomes: At the end of the course, the students will be able to",,,,,,,,,,,,
+1,,,"apply the knowledge of symmetric and asymmetric cryptography to implement simple
+ciphers.",,,,,,,,,
+,2,,explore the different network reconnaissance tools to gather information about networks.,,,,,,,,,
+3,3,,"explore and use tools like sniffers, port scanners and other related tools for analysing
+packets in a Network.",,,,,,,,,
+4,,,"set up firewalls and intrusion detection systems using open-source technologies and to
+explore email security.",,,,,,,,,
+,5,,explore various attacks like buffer-overflow and web application attack.,,,,,,,,,
+Suggested List of Experiments,,,,,,,,,,,,
+Sr. No,Title of Experiment,,,,,,,,,,,
+1,"Design and Implementation of a product cipher using Substitution and Transposition
+ciphers.",,,,,,,,,,,
+2,Implementation and analysis of RSA crypto system.,,,,,,,,,,,
+3,Implementation of Diffie Hellman Key exchange algorithm,,,,,,,,,,,
+4,"For varying message sizes, test integrity of message using MD-5, SHA-1, and
+analyse the performance of the two protocols. Use crypt APIs.",,,,,,,,,,,
+5,"Study the use of network reconnaissance tools like WHOIS, dig, traceroute, ns
+lookup to gather information about networks and domain registrars.",,,,,,,,,,,
+6,"Study of packet sniffer tools: wireshark,:
+1. Download and install wireshark and capture icmp, tcp, and http packets in
+promiscuous mode.
+2. Explore how the packets can be traced based on different filters.",,,,,,,,,,,
+7,"Download and install nmap. Use it with different options to scan open ports, perform
+OS fingerprinting, do a ping scan, tcp port scan, udp port scan, xmas scan etc.",,,,,,,,,,,
+8,"Detect ARP spoofing using nmap and/or open-source tool ARPWATCH and
+wireshark. Use arping tool to generate gratuitous arps and monitor using wireshark",,,,,,,,,,,
+9,"Simulate DOS attack using Hping, hping3 and other tools",,,,,,,,,,,
+10,"Simulate buffer overflow attack using Ollydbg, Splint, Cpp check etc",,,,,,,,,,,
+11,"a. Set up IPSEC under LINUX.
+b. Set up Snort and study the logs.",,,,,,,,,,,
+12,Setting up personal Firewall using iptables,,,,,,,,,,,
+13,Explore the GPG tool of linux to implement email security,,,,,,,,,,,
+14,"SQL injection attack, Cross-Cite Scripting attack simulation",,,,,,,,,,,
+15,Case Study /Seminar: Topic beyond syllabus related to topics covered.,,,,,,,,,,,
+Term Work:,,,,,,,,,,,,
+1,Term work should consist of 10 experiments.,,,,,,,,,,,
+2,Journal must include at least 2 assignments on content of theory and practical of,,,,,,,,,,,
+,“Cryptography and System Security “,,,,,,,,,,,
+3,"The final certification and acceptance of term work ensures that satisfactory performance of
+laboratory work and minimum passing marks in term work.",,,,,,,,,,,
+4,"The distribution of marks for term work shall be as follows:
+Lab Performance 15 Marks
+Assignments 05 Marks
+Attendance (Theory & practical) 05 Marks",,,,,,,,,,,
+Lab Code,Lab Name,Credit,,,,,,,,,,
+CSL603,Mobile Computing Lab,1,,,,,,,,,,
+Prerequisite: Computer Networks,,,,,,,,,,,,
+Lab Objectives:,,,,,,,,,,,,
+1,,,To learn the mobile computing tools and software for implementation.,,,,,,,,,
+2,,,To understand the security algorithms in mobile networks,,,,,,,,,
+3,,,To learn security concepts,,,,,,,,,
+"Lab Outcomes: At the end of the course, the students will be able to",,,,,,,,,,,,
+,1,,develop and demonstrate mobile applications using various tools,,,,,,,,,
+,2,,"articulate the knowledge of GSM, CDMA & Bluetooth technologies and demonstrate it.",,,,,,,,,
+3,3,,"Students will able to carry out simulation of frequency reuse, hidden/exposed terminal
+problem",,,,,,,,,
+,4,,implement security algorithms for mobile communication network,,,,,,,,,
+,5,,demonstrate simulation and compare the performance of Wireless LAN,,,,,,,,,
+"Suggested List of Experiments
+The softwares like Android Studio, J2ME, NS2, NS3 and any other software which is suitable
+are recommended for performing the practical.",,,,,,,,,,,,
+Sr. No.,Title of Experiment,,,,,,,,,,,
+1,"Implementation a Bluetooth network with application as transfer of a file from one
+device to another.",,,,,,,,,,,
+2,To implement a basic function of Code Division Multiple Access (CDMA).,,,,,,,,,,,
+3,Implementation of GSM security algorithms (A3/A5/A8),,,,,,,,,,,
+4,"Illustration of Hidden Terminal/Exposed terminal Problem. Consider two Wi-fi
+base stations (STA) and an access point (AP) located along the x-axis. All the
+nodes are fixed. The AP is situated at the middle of the two STA, the distance of
+separation being 150 m. [variable]. Node #0 and node #1 are the hidden
+terminals. Both are transmitting some data to the AP (almost at same rate) at the
+same time. The loss across the wireless link between each STA and the AP is
+fixed at 50 dB irrespective of the distance of separation. To study how
+RTS/CTS helps in wireless networks,
+1. No RTS/CTS is being sent.
+2. Nodes do exchange RTS/CTS packets.
+Compare the no. of packet retransmissions required in both the cases (as
+obtained in the output) and compare the results.",,,,,,,,,,,
+5,"To setup & configuration of Wireless Access Point (AP). Analyze the Wi-Fi
+communication range in the presence of the access point (AP) and the base
+station (BS). Consider BS and AP are static. Find out the maximum distance to
+which two way communications is possible. Try multiple iterations by adjusting
+its distance in the code and test it.",,,,,,,,,,,
+6,"Study of security tools (like Kismet,Netstumbler)",,,,,,,,,,,
+7,Develop an application that uses GUI components.,,,,,,,,,,,
+8,Write an application that draws basic graphical primitives on the screen.,,,,,,,,,,,
+9,Develop an application that makes use of database.,,,,,,,,,,,
+10,Develop a native application that uses GPS location information.,,,,,,,,,,,
+11,Implement an application that creates an alert upon receiving a message.,,,,,,,,,,,
+12,"Implementation of income tax/loan EMI calculator and deploy the same on real
+devices (Implementation of any real time application)",,,,,,,,,,,
+Term Work:,,,,,,,,,,,,
+1,Term work should consist of 10 experiments.,,,,,,,,,,,
+2,"Journal must include at least 2 assignments on content of theory and practical of “ Mobile
+Computing”",,,,,,,,,,,
+3,"The final certification and acceptance of term work ensures that satisfactory performance of
+laboratory work and minimum passing marks in term work.",,,,,,,,,,,
+4,"Total 25 Marks (Experiments: 15-marks, Attendance Theory& Practical: 05-marks,
+Assignments: 05-marks)",,,,,,,,,,,
+Useful Links,,,,,,,,,,,,
+1,,https://nptel.ac.in/courses/106/106/106106147/,,,,,,,,,,
+2,,https://www.coursera.org/learn/smart-device-mobile-emerging-technologies,,,,,,,,,,
+Lab Code,Lab Name,Credit,,,,,,,,,,
+CSL604,Artificial Intelligence Lab,1,,,,,,,,,,
+"Prerequisite: Discrete Mathematics, Data Structure",,,,,,,,,,,,
+Lab Objectives:,,,,,,,,,,,,
+1,,,To realize the basic techniques to build intelligent systems,,,,,,,,,
+2,,,To apply appropriate search techniques used in problem solving,,,,,,,,,
+3,,,To create knowledge base for uncertain data,,,,,,,,,
+"Lab Outcomes: At the end of the course, the students will be able to",,,,,,,,,,,,
+,1,,Identify languages and technologies for Artificial Intelligence,,,,,,,,,
+2,2,,"Understand and implement uninformed and informed searching techniques for real world
+problems.",,,,,,,,,
+,3,,Create a knowledge base using any AI language.,,,,,,,,,
+,4,,Design and implement expert systems for real world problems.,,,,,,,,,
+Suggested List of Experiments (programming in python),,,,,,,,,,,,
+Sr. No.,Title of Experiment,,,,,,,,,,,
+1,"One case study on AI applications published in IEEE/ACM/Springer or any prominent
+journal.",,,,,,,,,,,
+2,"Assignments on State space formulation and PEAS representation for various AI
+applications",,,,,,,,,,,
+3,Program on uninformed search methods.,,,,,,,,,,,
+4,Program on informed search methods.,,,,,,,,,,,
+5,Program on Game playing algorithms.,,,,,,,,,,,
+6,Program for first order Logic,,,,,,,,,,,
+7,Planning Programming,,,,,,,,,,,
+8,Implementation for Bayes Belief Network,,,,,,,,,,,
+"Note: Any other practical covering the syllabus topics and subtopics can be conducted.
+The programming assignment for First order logics could be in the form of a mini project",,,,,,,,,,,,
+Term Work:,,,,,,,,,,,,
+1,Term work should consist of a minimum of 8 experiments.,,,,,,,,,,,
+2,"Journal must include at least 2 assignments on content of theory and practical of “Artificial
+Intelligence”",,,,,,,,,,,
+3,"The final certification and acceptance of term work ensures that satisfactory performance of
+laboratory work and minimum passing marks in term work.",,,,,,,,,,,
+4,"Total 25 Marks (Experiments: 15-marks, Attendance Theory & Practical: 05-marks,
+Assignments: 05-marks)",,,,,,,,,,,
+Oral & Practical exam: Based on the entire syllabus of CSC604: Artificial Intelligence,,,,,,,,,,,,
+Lab Code,,,,,,Lab Name,,Credit,,,,
+CSL605,,,,,,Cloud Computing,,2,,,,
+Prerequisite: Computer Networks,,,,,,,,,,,,
+Lab Objectives: The course has following objectives,,,,,,,,,,,,
+1,,,To make students familiar with key concepts of virtualization.,,,,,,,,,
+2,,,"To make students familiar with various deployment models of cloud such as private, public,
+hybrid and community so that they star using and adopting appropriate type of cloud for their
+application.",,,,,,,,,
+3,,,"To make students familiar with various service models such as IaaS, SaaS, PaaS, Security as
+a Service (SECaaS) and Database as a Service.",,,,,,,,,
+4,,,"To make students familiar with security and privacy issues in cloud computing and how to
+address them.",,,,,,,,,
+"Lab Outcomes: At the end of the course, the students will be able to",,,,,,,,,,,,
+,1,,Implement different types of virtualization techniques.,,,,,,,,,
+2,2,,"Analyze various cloud computing service models and implement them to solve the given
+problems.",,,,,,,,,
+,3,,Design and develop real world web applications and deploy them on commercial cloud(s).,,,,,,,,,
+,4,,Explain major security issues in the cloud and mechanisms to address them.,,,,,,,,,
+5,5,,,Explore various commercially available cloud services and recommend the appropriate one for,,,,,,,,
+,,,,the given application.,,,,,,,,
+6,,,Implement the concept of containerization,Implement the concept of containerization,,,,,,,,
+Module,,,,,Detailed Contents,,Hours,,LO,,,
+01,,,,,"Title: Introduction and overview of cloud computing.
+Objective: To understand the origin of cloud computing, cloud
+cube model, NIST model, characteristics of cloud, different
+deployment models, service models, advantages and
+disadvantages.",,2,,2,,,
+02,,,,,"Title: To study and implement Hosted Virtualization using
+VirtualBox& KVM.
+Objective: To know the concept of Virtualization along with
+their types, structures and mechanisms. This experiment should
+have demonstration of creating and running Virtual machines
+inside hosted hypervisors like VirtualBox and KVM with their
+comparison based on various virtualization parameters.",,2,,1,,,
+03,,,,,"Title: To study andImplement Bare-metal Virtualization using
+Xen, HyperV or VMware Esxi.
+Objective: To understand the functionality of Bare-metal
+hypervisors and their relevance in cloud computing platforms.
+This experiment should have demonstration of install, configure
+and manage Bare Metal hypervisor along with instructions to
+create and run virtual machines inside it. It should also
+emphasize on accessing VMs in different environments along
+with additional services provided by them like Load balancing,
+Auto-Scaling, Security etc.",,4,,1,,,
+04,"Title: To study andImplement Infrastructure as a Service using
+AWS/Microsoft Azure.
+Objective: To demonstrate the steps to create and run virtual
+machines inside Public cloud platform. This experiment should
+emphasize on creating and running Linux/Windows Virtual
+machine inside Amazon EC2 or Microsoft Azure Compute and
+accessing them using RDP or VNC tools.",4,2,,,,,,,,,
+05,"Title: To study andImplement Platform as a Service using
+AWS Elastic Beanstalk/ Microsoft Azure App Service.
+Objective: To demonstrate the steps to deploy Web applications
+or Web services written in different languages on AWS Elastic
+Beanstalk/ Microsoft Azure App Service.",4,2,,,,,,,,,
+06,"Title: To study andImplementStorage as a Service using Own
+Cloud/ AWS S3, Glaciers/ Azure Storage.
+Objective: To understand the concept of Cloud storage and to
+demonstrate the different types of storages like object storage,
+block level storages etc. supported by Cloud Platforms like Own
+Cloud/ AWS S3, Glaciers/ Azure Storage.",4,2,,,,,,,,,
+07,"Title: To study andImplementDatabase as a Service on
+SQL/NOSQL databases like AWS RDS, AZURE SQL/
+MongoDB Lab/ Firebase.
+Objective: To know the concept of Database as a Service
+running on cloud and to demonstrate the CRUD operations on
+different SQL and NOSQL databases running on cloud like
+AWS RDS, AZURE SQL/ Mongo Lab/ Firebase.",2,2,,,,,,,,,
+08,"Title: To study andImplementSecurity as a Service on
+AWS/Azure
+Objective: To understand the Security practices available in
+public cloud platforms and to demonstrate various Threat
+detection, Data protection and Infrastructure protection services
+in AWS and Azure.",3,4,,,,,,,,,
+09,"Title: To study and implement Identity and Access
+Management (IAM) practices on AWS/Azure cloud.
+Objective: To understand the working of Identity and Access
+Management IAM in cloud computing and to demonstrate the
+case study based on Identity and Access Management (IAM) on
+AWS/Azure cloud platform.",2,2,,,,,,,,,
+10,"Title: To study and Implement Containerization using Docker
+Objective: To know the basic differences between Virtual
+machine and Container. It involves demonstration of creating,
+finding, building, installing, and running Linux/Windows
+application containers inside local machine or cloud platform.",4,6,,,,,,,,,
+11,"Title: To study and implement container orchestration using
+Kubernetes
+Objective: To understand the steps to deploy Kubernetes
+Cluster on local systems, deploy applications on Kubernetes,
+creating a Service in Kubernetes, develop Kubernetes
+configuration files in YAML and creating a deployment in
+Kubernetes using YAML,",4,6,,,,,,,,,
+12,"Mini-project: Design a Web Application hosted on public
+cloud platform
+[It should cover the concept of IaaS, PaaS, DBaaS, Storage as a
+Service, Security as a Service etc.]",4,"3, 5",,,,,,,,,
+Sr. No.,Suggested Assignment List (Any two),LO,,,,,,,,,,
+1,"Assignment based on selection of suitable cloud platform solution
+based on requirement analysis considering given problem
+statement",5,,,,,,,,,,
+2,"Assignment on recent trends in cloud computing and related
+technologies",5,,,,,,,,,,
+3,"Assignment on comparative study of different computing
+technologies [Parallel, Distributed, Cluster, Grid, Quantum)",5,,,,,,,,,,
+4,"Comparative study of different hosted and bare metal Hypervisors
+with suitable parameters along with their use in public/private
+cloud platform",1,,,,,,,,,,
+5,"Assignment on explore and compare the similar type of services
+provided by AWS and Azure [Any ten services]",5,,,,,,,,,,
+Digital Material:,,,,,,,,,,,,
+"Sr.
+No.",Topic,Link,,,,,,,,,,
+1,"Introduction and overview of cloud
+computing","https://www.nist.gov/system/files/documents
+/itl/cloud/NIST_SP-500-291_Version-
+2_2013_June18_FINAL.pdf",,,,,,,,,,
+2,Hosted Virtualization using KVM,"https://phoenixnap.com/kb/ubuntu-install-
+kvm\",,,,,,,,,,
+3,Baremetal Virtualization using Xen,"https://docs.citrix.com/en-us/xenserver/7-
+1/install.html",,,,,,,,,,
+4,"IaaS, PaaS, STaaS, DbaaS, IAM and
+Security as a Service on AWS and
+Azure","1) AWS
+https://docs.aws.amazon.com/
+2) MS Azure
+https://docs.microsoft.com/en-us/azure",,,,,,,,,,
+5,Docker,https://docs.docker.com/get-started/,,,,,,,,,,
+6,Kubernetes,https://kubernetes.io/docs/home/,,,,,,,,,,
+Textbooks:,,,,,,,,,,,,
+1,"Bernard Golden, “Amazon Web Services for Dummies”, John Wiley & Sons, Inc.",,,,,,,,,,,
+2,"Michael Collier, Robin Shahan, “Fundamentals of Azure, Microsoft Azure Essentials”,
+Microsoft Press.",,,,,,,,,,,
+3,"RajkumarBuyya, Christian Vecchiola, S ThamaraiSelvi, “Mastering Cloud Computing”,
+Tata McGraw-Hill Education.",,,,,,,,,,,
+4,"Barrie Sosinsky, “Cloud Computing Bible”, Wiley publishing.",,,,,,,,,,,
+5,"John Paul Mueller, “AWS for Admins for Developers”, John Wiley & Sons, Inc.",,,,,,,,,,,
+6,"Ken Cochrane, Jeeva S. Chelladhurai, NeependraKhare , “Docker Cookbook - Second
+Edition”, Packt publication",,,,,,,,,,,
+7,"Jonathan Baier, “Getting Started with Kubernetes-Second Edition”, Packt Publication.",,,,,,,,,,,
+Term Work:,,,,,,,,,,,,
+1,Term work should consist of 10 experiments and a mini project.,,,,,,,,,,,
+2,Journal must include at least 2 assignments.,,,,,,,,,,,
+3,"The final certification and acceptance of term work ensures that satisfactory performance of
+laboratory work and minimum passing marks in term work.",,,,,,,,,,,
+4,"Total 50 Marks (Experiments: 15-marks, Mini project (Implementation) 15 marks,
+Mini Project Presentation & Report [for deployment, utilization, monitoring and
+billing] 10 Marks, Attendance 05-marks, Assignments: 05-marks)",,,,,,,,,,,
+"Oral examination will be based on Laboratory work, mini project and above syllabus.",,,,,,,,,,,,
+Course code,Course Name,Credits,,,,,,,,,,
+CSM601,Mini Project 2B,02,,,,,,,,,,
+Objectives,,,,,,,,,,,,
+1,To understand and identify the problem,,,,,,,,,,,
+2,To apply basic engineering fundamentals and attempt to find solutions to the problems.,,,,,,,,,,,
+3,"Identify, analyze, formulate and handle programming projects with a comprehensive and
+systematic approach",,,,,,,,,,,
+4,"To develop communication skills and improve teamwork amongst group members and
+inculcate the process of self-learning and research.",,,,,,,,,,,
+Outcome: Learner will be able to…,,,,,,,,,,,,
+1,"Identify societal/research/innovation/entrepreneurship problems through appropriate
+literature surveys",,,,,,,,,,,
+2,"Identify Methodology for solving above problem and apply engineering knowledge and
+skills to solve it",,,,,,,,,,,
+3,"Validate, Verify the results using test cases/benchmark data/theoretical/
+inferences/experiments/simulations",,,,,,,,,,,
+4,"Analyze and evaluate the impact of solution/product/research/innovation /entrepreneurship
+towards societal/environmental/sustainable development",,,,,,,,,,,
+5,"Use standard norms of engineering practices and project management principles during
+project work",,,,,,,,,,,
+6,"Communicate through technical report writing and oral presentation.
+● The work may result in research/white paper/ article/blog writing and publication
+● The work may result in business plan for entrepreneurship product created
+● The work may result in patent filing.",,,,,,,,,,,
+7,"Gain technical competency towards participation in Competitions, Hackathons, etc.",,,,,,,,,,,
+8,"Demonstrate capabilities of self-learning, leading to lifelong learning.",,,,,,,,,,,
+9,Develop interpersonal skills to work as a member of a group or as leader,,,,,,,,,,,
+Guidelines for Mini Project,,,,,,,,,,,,
+1,"Mini project may be carried out in one or more form of following:
+Product preparations, prototype development model, fabrication of set-ups, laboratory
+experiment development, process modification/development, simulation, software
+development, integration of software (frontend-backend) and hardware, statistical data
+analysis, creating awareness in society/environment etc.",,,,,,,,,,,
+2,"Students shall form a group of 3 to 4 students, while forming a group shall not be allowed
+less than three or more than four students, as it is a group activity.",,,,,,,,,,,
+3,"Students should do survey and identify needs, which shall be converted into problem
+statement for mini project in consultation with faculty supervisor/head
+of department/internal committee of faculties.",,,,,,,,,,,
+4,"Students shall submit an implementation plan in the form of Gantt/PERT/CPM chart, which
+will cover weekly activity of mini projects.",,,,,,,,,,,
+5,"A logbook may be prepared by each group, wherein the group can record weekly work
+progress, guide/supervisor can verify and record notes/comments.",,,,,,,,,,,
+6,"Faculty supervisors may give inputs to students during mini project activity; however, focus
+shall be on self-learning.",,,,,,,,,,,
+7,"Students under the guidance of faculty supervisor shall convert the best solution into a
+working model using various components of their domain areas and demonstrate.",,,,,,,,,,,
+8,"The solution to be validated with proper justification and report to be compiled in standard
+format of University of Mumbai. Software requirement specification (SRS) documents,
+research papers, competition certificates may be submitted as part of annexure to the report.",,,,,,,,,,,
+9,,"With the focus on self-learning, innovation, addressing societal/research/innovation
+problems and entrepreneurship quality development within the students through the Mini
+Projects, it is preferable that a single project of appropriate level and quality be carried out
+in two semesters by all the groups of the students. i.e. Mini Project 2 in semesters V and
+VI.",,,,,,,,,,
+10,,"However, based on the individual students or group capability, with the mentor’s
+recommendations, if the proposed Mini Project adhering to the qualitative aspects
+mentioned above, gets completed in odd semester, then that group can be allowed to work
+on the extension of the Mini Project with suitable improvements/modifications or a
+completely new project idea in even semester. This policy can be adopted on a case by
+case basis.",,,,,,,,,,
+Term Work,,,,,,,,,,,,
+"The review/ progress monitoring committee shall be constituted by the heads of departments of
+each institute. The progress of the mini project to be evaluated on a continuous basis, based on
+the SRS document submitted. minimum two reviews in each semester.",,,,,,,,,,,,
+"In continuous assessment focus shall also be on each individual student, assessment based on
+individual’s contribution in group activity, their understanding and response to questions.",,,,,,,,,,,,
+Distribution of Term work marks for both semesters shall be as below:,,,Marks 25,,,,,,,,,
+1,Marks awarded by guide/supervisor based on logbook,,10,,,,,,,,,
+2,Marks awarded by review committee,,10,,,,,,,,,
+3,Quality of Project report,,05,,,,,,,,,
+"Review / progress monitoring committee may consider following points for assessment based
+on either one year or half year project as mentioned in general guidelines",,,,,,,,,,,,
+One-year project:,,,,,,,,,,,,
+1,,"In the first semester the entire theoretical solution shall be made ready, including
+components/system selection and cost analysis. Two reviews will be conducted based on
+a presentation given by a student group.
+First shall be for finalization of problem
+Second shall be on finalization of proposed solution of problem.",,,,,,,,,,
+2,,"In the second semester expected work shall be procurement of component’s/systems,
+building of working prototype, testing and validation of results based on work completed
+in an earlier semester.
+First review is based on readiness of building working prototype to be conducted.
+Second review shall be based on poster presentation cum demonstration of working
+model in the last month of the said semester.",,,,,,,,,,
+Half-year project:,,,,,,,,,,,,
+1,,"In this case in one semester students’ group shall complete project in all aspects including,
+Identification of need/problem
+Proposed final solution
+Procurement of components/systems
+Building prototype and testing",,,,,,,,,,
+2,,"Two reviews will be conducted for continuous assessment,
+First shall be for finalization of problem and proposed solution
+Second shall be for implementation and testing of solution.",,,,,,,,,,
+Mini Project shall be assessed based on following points,,,,,,,,,,,,
+1,Clarity of problem and quality of literature Survey for problem identification,,,,,,,,,,,
+2,Requirement gathering via SRS/ Feasibility Study,,,,,,,,,,,
+3,Completeness of methodology implemented,,,,,,,,,,,
+4,"Design, Analysis and Further Plan",,,,,,,,,,,
+5,"Novelty, Originality or Innovativeness of project",,,,,,,,,,,
+6,Societal / Research impact,,,,,,,,,,,
+7,"Effective use of skill set : Standard engineering practices and Project management
+standard",,,,,,,,,,,
+8,Contribution of an individual’s as member or leader,,,,,,,,,,,
+9,Clarity in written and oral communication,,,,,,,,,,,
+10,Verification and validation of the solution/ Test Cases,,,,,,,,,,,
+11,Full functioning of working model as per stated requirements,,,,,,,,,,,
+12,Technical writing /competition/hackathon outcome being met,,,,,,,,,,,
+"In one year project (sem V and VI), first semester evaluation may be based on first 10 criteria
+and remaining may be used for second semester evaluation of performance of students in mini
+projects.",,,,,,,,,,,,
+"In case of half year projects (completing in VI sem) all criteria’s in generic may be considered
+for evaluation of performance of students in mini projects.",,,,,,,,,,,,
+Guidelines for Assessment of Mini Project Practical/Oral Examination:,,,,,,,,,,,,
+1,Report should be prepared as per the guidelines issued by the University of Mumbai.,,,,,,,,,,,
+2,"Mini Project shall be assessed through a presentation and demonstration of working model
+by the student project group to a panel of Internal and External Examiners preferably from
+industry or research organizations having experience of more than five years approved by
+the head of Institution.",,,,,,,,,,,
+3,"Students shall be motivated to publish a paper/participate in competition based on the
+work in Conferences/students competitions.",,,,,,,,,,,
