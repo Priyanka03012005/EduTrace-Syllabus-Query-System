@@ -1,35 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Syllabus Query System</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduTrace - Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-    <h2>Syllabus PDF Upload</h2>
+  {% include "nav.html" %}
 
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
-    {% endif %}
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="text">
+          <h1>Find Relevant Topics from<br>Your Syllabus in Seconds!</h1>
+          <p>Upload your Third Year Computer Engineering Syllabus PDF and ask questions to get topic details, modules, and YouTube learning links.</p>
+          <a href="#upload-section" class="btn-primary">Get Started</a>
+        </div>
+        <div class="image">
+          <div style="width: 300px; height: 200px; background: #f1f5ff; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <div style="font-size: 48px; color: #4a6bf5;">📚</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <form action="/" method="POST" enctype="multipart/form-data">
-        <input type="file" name="pdf" required>
-        <button type="submit">Upload PDF</button>
-    </form>
+    <!-- Upload and Question Section -->
+    <section id="upload-section" class="module-container">
+      {% if error %}
+        <div class="error-message">{{ error }}</div>
+      {% endif %}
+      
+      {% if session.get('session_message') %}
+        <div class="success-message">
+          {{ session.get('session_message') }}
+        </div>
+      {% endif %}
 
-    {% if show_input %}
-        <hr>
-        <h3>Ask a Question</h3>
-        <form method="POST">
-            <input type="text" name="question" placeholder="Enter your question" required>
-            <button type="submit">Submit</button>
+      {% if session.get('file_upload_success') %}
+        <div class="file-success-message">
+          {{ session.get('file_upload_success') }}
+        </div>
+      {% endif %}
+
+      {% if current_file %}
+        <div class="current-file-info">
+          <span>Currently loaded: <strong>{{ current_file }}</strong></span>
+        </div>
+      {% endif %}
+
+      {% if not show_input %}
+        <h2>Upload Syllabus PDF</h2>
+        <div class="upload-instructions">
+          <p>Please upload a valid Third Year Computer Engineering Syllabus PDF file only.</p>
+          <p>Other files will not be processed correctly.</p>
+          {% if not is_logged_in %}
+            <div class="login-required-notice">
+              <p><strong>Note:</strong> You need to <a href="{{ url_for('login') }}">log in</a> to ask questions and detect modules.</p>
+            </div>
+          {% endif %}
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+          <div class="file-upload-container">
+            <input type="file" name="pdf" id="pdf-upload" accept=".pdf" required />
+            <label for="pdf-upload" class="file-label">Choose PDF file</label>
+          </div>
+          <button type="submit" class="btn-primary">Upload and Process</button>
         </form>
-    {% endif %}
+      {% else %}
+        <h2>Ask a Question</h2>
+        <form method="POST">
+          <input type="text" name="question" placeholder="Type your syllabus-related question here..." required />
+          <button type="submit" class="btn-primary">Detect Module</button>
+        </form>
 
-    {% if result %}
-        <h3>Detected Module</h3>
-        <p><strong>Subject:</strong> {{ result.subject }}</p>
-        <p><strong>Module No:</strong> {{ result.module_no }}</p>
-        <p><strong>Module Content:</strong> {{ result.module_name }}</p>
-    {% endif %}
+        {% if question %}
+          <div class="asked-question">
+            <h3>Your Question:</h3>
+            <p>"{{ question }}"</p>
+          </div>
+        {% endif %}
+
+        {% if result %}
+          <div class="result-container">
+            <h3>Detection Results</h3>
+            <div class="result-card">
+              <div class="result-item">
+                <h4>Subject:</h4>
+                <p>{{ result.subject }}</p>
+              </div>
+              <div class="result-item">
+                <h4>Module Number:</h4>
+                <p>{{ result.module_no }}</p>
+              </div>
+              <div class="result-item">
+                <h4>Module Name:</h4>
+                <p>{{ result.module_name }}</p>
+              </div>
+              {% if result.confidence %}
+                <div class="result-item">
+                  <h4>Confidence:</h4>
+                  <div class="confidence-bar">
+                    <div class="confidence-level" style="width: {{ result.confidence }}%"></div>
+                    <span>{{ result.confidence }}%</span>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+
+            {% if youtube_links %}
+              <div class="youtube-section">
+                <h3>Related YouTube Videos</h3>
+                <div class="video-links">
+                  {% for link in youtube_links %}
+                    <a href="{{ link }}" target="_blank" class="video-link">{{ loop.index }}. {{ link }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about">
+      <h3>📘 About Us</h3>
+      <h4>What is Syllabus Query System?</h4>
+      <p>
+        Syllabus Query System (SQS) is an intelligent, AI-powered web platform that helps students effortlessly identify the subject, module number, and content of any syllabus-related question.
+        Designed to make academic exploration easier, SQS acts as your personal study companion, guiding you through complex topics with simplicity and speed.
+      </p>
+
+      <h4>🍥 Our Mission</h4>
+      <p>
+        To bridge the gap between student curiosity and syllabus clarity — enabling smarter learning through intuitive question analysis and content mapping.
+      </p>
+
+      <div class="cta-buttons">
+        <a href="{{ url_for('how') }}" class="btn-secondary">How It Works</a>
+        <a href="{{ url_for('module_detect') }}" class="btn-primary">Module Detection</a>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 EduTrace. All rights reserved.</p>
+  </footer>
 </body>
 </html>

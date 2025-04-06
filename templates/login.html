@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduTrace Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <!-- Navbar -->
+  {% include "nav.html" %}
+
+  <!-- Login Card -->
+  <div class="container">
+    <div class="card">
+      <div class="left-section">
+        <div class="icon">&#128214;</div>
+        <h2>EduTrace</h2>
+      </div>
+      <div class="right-section">
+        <h2>LOGIN PAGE</h2>
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
+        <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+          <input type="text" id="username" name="username" placeholder="USERNAME" required />
+          <input type="password" id="password" name="password" placeholder="PASSWORD" required />
+          <div class="checkbox">
+            <input type="checkbox" id="remember" name="remember" />
+            <label for="remember">REMEMBER ME</label>
+          </div>
+          <button type="submit">LOGIN</button>
+        </form>
+        <p class="login-link">DON'T HAVE AN ACCOUNT? <a href="{{ url_for('signup') }}">SIGN UP</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Module Detection | EduTrace</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+  {% include "nav.html" %}
+
+  <main class="module-container">
+    <h2>Module Detection</h2>
+    
+    {% if error %}
+      <div class="error-message">{{ error }}</div>
+    {% endif %}
+    
+    {% if session.get('session_message') %}
+      <div class="success-message">
+        {{ session.get('session_message') }}
+      </div>
+    {% endif %}
+    
+    {% if session.get('file_upload_success') %}
+      <div class="file-success-message">
+        {{ session.get('file_upload_success') }}
+      </div>
+    {% endif %}
+    
+    {% if current_file %}
+      <div class="current-file-info">
+        <span>Currently loaded: <strong>{{ current_file }}</strong></span>
+      </div>
+    {% endif %}
+    
+    {% if not show_input %}
+      <div class="upload-section">
+        <h3>Upload Syllabus PDF</h3>
+        <div class="upload-instructions">
+          <p>Please upload a valid Third Year Computer Engineering Syllabus PDF file only.</p>
+          <p>Other files will not be processed correctly.</p>
+        </div>
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('module_detect') }}">
+          <div class="file-upload-container">
+            <input type="file" id="pdf-upload" name="pdf" accept=".pdf" required />
+            <label for="pdf-upload" class="file-label">Choose PDF file</label>
+          </div>
+          <button type="submit" class="btn-primary">Upload and Process</button>
+        </form>
+      </div>
+    {% else %}
+      <div class="question-section">
+        <h3>Ask a Question</h3>
+        <form method="POST" action="{{ url_for('module_detect') }}">
+          <input type="text" id="question" name="question" placeholder="Enter your syllabus-related question here..." required />
+          <button type="submit" class="btn-primary">Detect Module</button>
+        </form>
+      </div>
+      
+      {% if question %}
+        <div class="asked-question">
+          <h3>Your Question:</h3>
+          <p>"{{ question }}"</p>
+        </div>
+      {% endif %}
+      
+      {% if result %}
+        <div class="result-container">
+          <div class="result-card">
+            <div class="result-item">
+              <h3>Subject</h3>
+              <p>{{ result.subject }}</p>
+            </div>
+            
+            <div class="result-item">
+              <h3>Module Number</h3>
+              <p>{{ result.module_no }}</p>
+            </div>
+            
+            <div class="result-item">
+              <h3>Module Content</h3>
+              <p>{{ result.module_name }}</p>
+            </div>
+            
+            {% if result.confidence %}
+              <div class="result-item">
+                <h3>Match Confidence</h3>
+                <div class="confidence-bar">
+                  <div class="confidence-level" style="width: {{ result.confidence }}%"></div>
+                  <span>{{ result.confidence }}%</span>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          
+          {% if youtube_links %}
+            <div class="youtube-section">
+              <h3>Related YouTube Videos</h3>
+              <div class="video-links">
+                {% for link in youtube_links %}
+                  <a href="{{ link }}" target="_blank" class="video-link">{{ loop.index }}. {{ link }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </main>
+</body>
+</html>

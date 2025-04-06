@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How It Works | EduTrace</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  {% include "nav.html" %}
+
+  <main class="container">
+    <h1>How It Works</h1>
+    <p>
+      Syllabus Query System is built to help students quickly find the subject, module, and relevant content 
+      for any academic question based on their uploaded syllabus. Here's how it works:
+    </p>
+
+    <ol>
+      <li>
+        <strong>Upload the Syllabus PDF</strong>: Users begin by uploading the official Third Year 
+        Computer Engineering syllabus PDF. The system verifies whether the uploaded file is valid and 
+        then extracts and processes all subject and module data from it.
+      </li>
+
+      <li>
+        <strong>Login to Your Account</strong>: To access the question asking and module detection features,
+        you must be logged in. This helps us provide a personalized experience and track your learning progress.
+      </li>
+
+      <li>
+        <strong>Ask a Question</strong>: After the syllabus is uploaded and you're logged in, you can enter any 
+        syllabus-related question into the input box. This could be a theoretical question, a keyword, or 
+        even a brief topic phrase.
+      </li>
+
+      <li>
+        <strong>Module and Subject Detection</strong>:<br/>
+        Based on the question, the system detects and displays the following:
+        <ul>
+          <li>Subject name</li>
+          <li>Module number</li>
+          <li>Matched module content</li>
+          <li>Confidence score</li>
+        </ul>
+        This helps you know exactly where your question fits within the syllabus.
+      </li>
+
+      <li>
+        <strong>Video Resource Integration</strong>:<br/>
+        To enhance learning, the system fetches relevant educational videos from YouTube based on the 
+        detected topic or module. These videos appear alongside the text results.
+      </li>
+
+      <li>
+        <strong>Search History</strong>:<br/>
+        All your queries are saved to your personal history. This allows you to revisit 
+        previous questions and track your learning progress over time.
+      </li>
+    </ol>
+
+    <div class="center-btn">
+      {% if is_logged_in %}
+        <a href="{{ url_for('module_detect') }}" class="btn-primary">Detect Module</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="btn-primary">Login to Detect Module</a>
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>
