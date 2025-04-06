@@ -7,6 +7,9 @@ import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from pathlib import Path
+from youtube_utils import get_youtube_links
+
+YOUTUBE_API_KEY = "AIzaSyAGtjDc-6-oHbIb_ChhozbOtTrnUaHTo9s"
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'data/pdf'
@@ -175,6 +178,11 @@ def index():
             try:
                 df = pd.read_csv("data/data.csv")
                 result = detect_subject_module(question, df)
+                youtube_links = []  # Initialize before any condition
+                if result and result["subject"] != "Out of Syllabus":
+                     youtube_links = get_youtube_links(result["module_name"], YOUTUBE_API_KEY)
+                return render_template("index.html", result=result, error=error, show_input=show_input, youtube_links=youtube_links)
+
                 show_input = True
             except Exception as e:
                 error = "❌ Please upload a valid syllabus PDF first."
