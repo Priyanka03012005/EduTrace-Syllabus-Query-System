@@ -1,125 +1,187 @@
 import os
-import fitz  # PyMuPDF for PDF text extraction
+import csv
+import glob
+import re
+import pdfplumber
 import pandas as pd
-from flask import Flask, render_template, request
-from fuzzywuzzy import process
-import openpyxl
-from threading import Thread
+from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
+from pathlib import Path
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "uploads"
-EXCEL_FILE = "syllabus_data.xlsx"
-
-# Ensure upload folder exists
+UPLOAD_FOLDER = 'data/pdf'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def async_extract_text(pdf_path):
-    text = extract_text_from_pdf(pdf_path)
-    return text
+def allowed_file(filename):
+    return '.' in filename and filename.lower().endswith('.pdf')
 
-def save_file_async(pdf):
-    pdf_path = os.path.join(UPLOAD_FOLDER, pdf.filename)
-    pdf.save(pdf_path)
-    thread = Thread(target=async_extract_text, args=(pdf_path,))
-    thread.start()
+def clear_data_folder():
+    for f in glob.glob('data/*'):
+        if os.path.isfile(f):
+            try:
+                os.remove(f)
+            except Exception as e:
+                print(f"Error deleting file {f}: {e}")
+        elif os.path.isdir(f):
+            for subf in glob.glob(f + '/*'):
+                try:
+                    os.remove(subf)
+                except Exception as e:
+                    print(f"Error deleting file {subf}: {e}")
 
+def pdf_to_csv(pdf_path, csv_path):
+    data = []
+    with pdfplumber.open(pdf_path) as pdf:
+        for page in pdf.pages:
+            tables = page.extract_tables()
+            if tables:
+                for table in tables:
+                    df = pd.DataFrame(table)
+                    df.fillna("", inplace=True)
+                    data.append(df)
 
+    if data:
+        final_df = pd.concat(data, ignore_index=True)
+        final_df.to_csv(csv_path, index=False)
+        print(f"✅ CSV file saved at: {csv_path}")
+    else:
+        print("❌ No tables found in the PDF.")
 
-# Function to extract text from PDF
-def extract_text_from_pdf(pdf_path):
-    doc = fitz.open(pdf_path)
-    text = ""
-    for page in doc:
-        text += page.get_text("text") + "\n"
-    return text
+    extract_course_and_modules(csv_path, "data/data.csv")
 
-# Function to parse syllabus and extract course and module details
-# def parse_syllabus(text):
-    lines = text.split("\n")
-    courses = []
+def extract_course_and_modules(csv_path, output_path):
+    df = pd.read_csv(csv_path, header=None)
+    extracted_data = []
     current_course = None
+    capture_modules = False
 
-    for line in lines:
-        line = line.strip()
-        if not line:
+    for i, row in df.iterrows():
+        row_values = row.astype(str).tolist()
+        row_text = " ".join(row_values).lower()
+
+        if "course code" in row_text and "course title" in row_text and "credit" in row_text:
+            if i + 1 < len(df):
+                current_course = df.iloc[i + 1, 1]
+                capture_modules = False
+
+        elif current_course and ("module" in row_text and "content" in row_text):
+            capture_modules = True
             continue
 
-        # Identify Course Name (Assumption: Capitalized words with & or spaces)
-        if line.istitle() or "&" in line:
-            current_course = line
-        elif current_course and line[0].isdigit():  # Identify Module (Assumption: Starts with number)
-            module_number, module_name = line.split(".", 1)
-            courses.append([current_course, module_number.strip(), module_name.strip()])
+        elif "textbook" in row_text:
+            capture_modules = False
 
-    return courses
+        elif capture_modules:
+            extracted_data.append([current_course] + row_values)
 
-def parse_syllabus(text):
-    lines = text.split("\n")
-    courses = []
-    current_course = None
+    if extracted_data:
+        final_df = pd.DataFrame(extracted_data, columns=["Course Title"] + [f"Column {i}" for i in range(len(extracted_data[0]) - 1)])
+        final_df.to_csv(output_path, index=False)
+        print(f"✅ Data extracted and saved to {output_path}")
 
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
+def check_syllabus(filepath):
+    with open(filepath, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        content = "\n".join(["\n".join(row) for row in reader])
+        target = "Third Year Engineering\n( Computer Engineering)"
+        if target not in content:
+            print("❌ PDF processed is not Third Year Engineering syllabus.")
+            return False
+        else:
+            print("✅ Syllabus check passed.")
+            return True
 
-        # Identify Course Name (Assumption: Capitalized words with & or spaces)
-        if line.istitle() or "&" in line:
-            current_course = line
-        elif current_course and line[0].isdigit():  # Identify Module (Assumption: Starts with number)
-            if "." in line:
-                module_number, module_name = line.split(".", 1)
-                courses.append([current_course, module_number.strip(), module_name.strip()])
-            else:
-                print(f"Skipping malformed module line: {line}")  # Debugging: Shows skipped lines
+def process_pdf_data(csv_input_path, csv_output_path):
+    df = pd.read_csv(csv_input_path)
+    df = df.iloc[:, :6]
+    df['Merged Column'] = df['Column 2'].combine_first(df['Column 3'])
+    df.drop(columns=['Column 2', 'Column 3', 'Column 4'], inplace=True)
 
-    return courses
+    df.rename(columns={
+        'Course Title': 'Subject',
+        'Column 0': 'Module no',
+        'Merged Column': 'Module content',
+        'Column 1': 'Replacement'
+    }, inplace=True)
 
-# Function to save syllabus data to Excel
-def save_to_excel(data):
-    df = pd.DataFrame(data, columns=["Course Name", "Module Number", "Module Name"])
-    df.to_excel(EXCEL_FILE, index=False)
+    df["Module no"] = pd.to_numeric(df["Module no"], errors="coerce")
 
-# Function to search for the most relevant course and module
-def search_syllabus(query):
-    df = pd.read_excel(EXCEL_FILE)
-    
-    # Find the best course match
-    best_course_match, _ = process.extractOne(query, df["Course Name"].unique())
+    df["Module content"] = df.apply(
+        lambda row: row["Replacement"] if re.fullmatch(r"\d+", str(row["Module content"])) else row["Module content"],
+        axis=1
+    )
 
-    # Filter data for the matched course
-    matched_df = df[df["Course Name"] == best_course_match]
+    df.drop(columns=["Replacement"], inplace=True)
+    df = df[~df.duplicated(subset=["Subject", "Module no"], keep="first")]
+    df = df[df["Module no"] <= 6]
+    df.to_csv(csv_output_path, index=False)
+    print(f"✅ Final processed data saved to {csv_output_path}")
 
-    # Find the best module match
-    best_module_match, _ = process.extractOne(query, matched_df["Module Name"].tolist())
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(r"[^a-zA-Z0-9\s]", "", text)
+    return text
 
-    # Get the module number for the matched module
-    module_number = matched_df[matched_df["Module Name"] == best_module_match]["Module Number"].values[0]
+def detect_subject_module(question, df):
+    question = preprocess_text(question)
+    best_match = None
+    max_matches = 0
 
-    return best_course_match, module_number, best_module_match
+    for _, row in df.iterrows():
+        module_content = preprocess_text(str(row["Module content"]))
+        module_words = set(module_content.split())
+        question_words = set(question.split())
+        common_words = module_words.intersection(question_words)
 
-# Flask routes
+        if len(common_words) > max_matches:
+            max_matches = len(common_words)
+            best_match = {
+                "subject": row["Subject"],
+                "module_no": row["Module no"],
+                "module_name": row["Module content"]
+            }
+
+    return best_match if best_match else {
+        "subject": "Out of Syllabus",
+        "module_no": "N/A",
+        "module_name": "No relevant module found."
+    }
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = None
+    error = None
+    show_input = False
 
     if request.method == "POST":
-        if "pdf" in request.files:
+        if "pdf" in request.files and request.files["pdf"].filename.endswith(".pdf"):
             pdf = request.files["pdf"]
-            if pdf.filename.endswith(".pdf"):
-                pdf_path = os.path.join(UPLOAD_FOLDER, pdf.filename)
-                pdf.save(pdf_path)
+            clear_data_folder()
+            filename = secure_filename(pdf.filename)
+            pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            pdf.save(pdf_path)
+            pdf_to_csv(pdf_path, "data/output.csv")
 
-                # Extract and parse syllabus
-                text = extract_text_from_pdf(pdf_path)
-                syllabus_data = parse_syllabus(text)
-                save_to_excel(syllabus_data)
+            if not check_syllabus("data/output.csv"):
+                error = "❌ Not a valid Third Year Computer Engineering syllabus"
+            else:
+                extract_course_and_modules("data/output.csv", "data/data.csv")
+                process_pdf_data("data/data.csv", "data/data.csv")
+                show_input = True
 
         elif "question" in request.form:
             question = request.form["question"]
-            result = search_syllabus(question)
+            try:
+                df = pd.read_csv("data/data.csv")
+                result = detect_subject_module(question, df)
+                show_input = True
+            except Exception as e:
+                error = "❌ Please upload a valid syllabus PDF first."
+                print(e)
 
-    return render_template("index.html", result=result)
+    return render_template("index.html", result=result, error=error, show_input=show_input)
 
 if __name__ == "__main__":
     app.run(debug=True)
+

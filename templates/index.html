@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Syllabus Query System</title>
 </head>
 <body>
-    <h2>Upload Syllabus PDF</h2>
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="pdf" accept=".pdf" required>
-        <button type="submit">Upload & Process</button>
+    <h2>Syllabus PDF Upload</h2>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="pdf" required>
+        <button type="submit">Upload PDF</button>
     </form>
 
-    <h2>Ask a Question</h2>
-    <form method="post">
-        <input type="text" name="question" placeholder="Enter your question" required>
-        <button type="submit">Search</button>
-    </form>
+    {% if show_input %}
+        <hr>
+        <h3>Ask a Question</h3>
+        <form method="POST">
+            <input type="text" name="question" placeholder="Enter your question" required>
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
 
     {% if result %}
-        <h3>Result:</h3>
-        <p><strong>Course Name:</strong> {{ result[0] }}</p>
-        <p><strong>Module Number:</strong> {{ result[1] }}</p>
-        <p><strong>Module Name:</strong> {{ result[2] }}</p>
+        <h3>Detected Module</h3>
+        <p><strong>Subject:</strong> {{ result.subject }}</p>
+        <p><strong>Module No:</strong> {{ result.module_no }}</p>
+        <p><strong>Module Content:</strong> {{ result.module_name }}</p>
     {% endif %}
 </body>
 </html>
