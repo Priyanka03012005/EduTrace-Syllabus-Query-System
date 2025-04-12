@@ -13,7 +13,7 @@ from functools import wraps
 import sqlite3
 from datetime import datetime
 
-YOUTUBE_API_KEY = "AIzaSyAGtjDc-6-oHbIb_ChhozbOtTrnUaHTo9s"
+YOUTUBE_API_KEY = "Enter your Key here"
 
 # Create data directory if it doesn't exist
 os.makedirs('data/users', exist_ok=True)
