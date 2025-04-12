@@ -10,8 +10,96 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from pathlib import Path
 from youtube_utils import get_youtube_links
 from functools import wraps
+import sqlite3
+from datetime import datetime
 
 YOUTUBE_API_KEY = "AIzaSyAGtjDc-6-oHbIb_ChhozbOtTrnUaHTo9s"
+
+# Create data directory if it doesn't exist
+os.makedirs('data/users', exist_ok=True)
+os.makedirs('data/pdf', exist_ok=True)
+
+# Database initialization
+def init_db():
+    conn = sqlite3.connect('data/users/users.db')
+    cursor = conn.cursor()
+    
+    # Drop existing tables if they exist
+    cursor.execute('DROP TABLE IF EXISTS user_activities')
+    cursor.execute('DROP TABLE IF EXISTS users')
+    
+    # Create users table with correct schema
+    cursor.execute('''
+    CREATE TABLE users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        role TEXT NOT NULL DEFAULT 'user',
+        email TEXT,
+        created_at TEXT NOT NULL,
+        last_login TEXT
+    )
+    ''')
+    
+    # Create user_activities table
+    cursor.execute('''
+    CREATE TABLE user_activities (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        activity_type TEXT NOT NULL,
+        details TEXT,
+        timestamp TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    )
+    ''')
+    
+    conn.commit()
+    
+    # Add default admin user
+    cursor.execute(
+        "INSERT INTO users (username, password, role, created_at) VALUES (?, ?, ?, ?)",
+        ('admin', generate_password_hash('admin123'), 'admin', datetime.now().isoformat())
+    )
+    conn.commit()
+    
+    # Migrate from CSV if exists
+    migrate_from_csv()
+    
+    conn.close()
+
+# Migration from CSV to SQLite
+def migrate_from_csv():
+    USER_DB_PATH = os.path.join('data/users', 'users.csv')
+    if os.path.exists(USER_DB_PATH):
+        conn = sqlite3.connect('data/users/users.db')
+        cursor = conn.cursor()
+        
+        # Check if migration is needed
+        cursor.execute("SELECT COUNT(*) FROM users")
+        user_count = cursor.fetchone()[0]
+        
+        # Only migrate if the DB is empty or only has the admin user
+        if user_count <= 1:
+            try:
+                with open(USER_DB_PATH, 'r', newline='') as f:
+                    reader = csv.reader(f)
+                    next(reader)  # Skip header
+                    for row in reader:
+                        if row and len(row) >= 3 and row[0] != 'admin':  # Skip admin user as already created
+                            cursor.execute(
+                                "INSERT OR IGNORE INTO users (username, password, role, created_at) VALUES (?, ?, ?, ?)",
+                                (row[0], row[1], row[2], datetime.now().isoformat())
+                            )
+                conn.commit()
+                # Rename old CSV after migration
+                os.rename(USER_DB_PATH, USER_DB_PATH + '.migrated')
+            except Exception as e:
+                print(f"Error migrating from CSV: {e}")
+        
+        conn.close()
+
+# Initialize the database
+init_db()
 
 app = Flask(__name__)
 app.secret_key = "edutracesecretsyllabus123"  # Added secret key for sessions
@@ -23,15 +111,90 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit for uploads
 # Create a data folder to store user information
 USER_DATA_FOLDER = 'data/users'
 os.makedirs(USER_DATA_FOLDER, exist_ok=True)
-USER_DB_PATH = os.path.join(USER_DATA_FOLDER, 'users.csv')
+DB_PATH = os.path.join(USER_DATA_FOLDER, 'users.db')
+USER_DB_PATH = os.path.join(USER_DATA_FOLDER, 'users.csv')  # Keep for backward compatibility
 
-# Create users.csv if it doesn't exist
-if not os.path.exists(USER_DB_PATH):
-    with open(USER_DB_PATH, 'w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(['username', 'password', 'role'])
-        # Add a default admin user
-        writer.writerow(['admin', generate_password_hash('admin123'), 'admin'])
+# User authentication functions
+def get_user(username):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+    user = cursor.fetchone()
+    
+    conn.close()
+    
+    if user:
+        return dict(user)
+    return None
+
+def add_user(username, password, role="user", email=None):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute(
+            "INSERT INTO users (username, password, role, email, created_at) VALUES (?, ?, ?, ?, ?)",
+            (username, generate_password_hash(password), role, email, datetime.now().isoformat())
+        )
+        conn.commit()
+        user_id = cursor.lastrowid
+        
+        # Log activity
+        log_user_activity(user_id, "signup", "User account created")
+        return True
+    except sqlite3.IntegrityError:
+        # Username already exists
+        return False
+    finally:
+        conn.close()
+
+def update_last_login(user_id):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "UPDATE users SET last_login = ? WHERE id = ?",
+        (datetime.now().isoformat(), user_id)
+    )
+    conn.commit()
+    conn.close()
+
+def log_user_activity(user_id, activity_type, details=None):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "INSERT INTO user_activities (user_id, activity_type, details, timestamp) VALUES (?, ?, ?, ?)",
+        (user_id, activity_type, details, datetime.now().isoformat())
+    )
+    conn.commit()
+    conn.close()
+
+# Add a login_required decorator
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Clear user data when they log in
+def clear_user_data():
+    if os.path.exists("data/data.csv"):
+        os.remove("data/data.csv")
+    if os.path.exists("data/output.csv"):
+        os.remove("data/output.csv")
+    for f in glob.glob('data/pdf/*'):
+        try:
+            os.remove(f)
+        except Exception as e:
+            print(f"Error deleting file {f}: {e}")
+    # Clear the current file info from session
+    if "current_file" in session:
+        session.pop("current_file", None)
 
 def allowed_file(filename):
     return '.' in filename and filename.lower().endswith('.pdf')
@@ -267,45 +430,25 @@ def detect_subject_module(question, df):
     
     return best_match
 
-# User authentication functions
-def get_user(username):
-    if os.path.exists(USER_DB_PATH):
-        with open(USER_DB_PATH, 'r', newline='') as f:
-            reader = csv.reader(f)
-            next(reader)  # Skip header
-            for row in reader:
-                if row and row[0] == username:
-                    return {"username": row[0], "password": row[1], "role": row[2]}
-    return None
+def is_valid_email(email):
+    """Basic email validation"""
+    if not email:
+        return True  # Email is optional
+    import re
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    return bool(re.match(pattern, email))
 
-def add_user(username, password, role="user"):
-    with open(USER_DB_PATH, 'a', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow([username, generate_password_hash(password), role])
-
-# Add a login_required decorator
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
-            return redirect(url_for('login', next=request.url))
-        return f(*args, **kwargs)
-    return decorated_function
-
-# Clear user data when they log in
-def clear_user_data():
-    if os.path.exists("data/data.csv"):
-        os.remove("data/data.csv")
-    if os.path.exists("data/output.csv"):
-        os.remove("data/output.csv")
-    for f in glob.glob('data/pdf/*'):
-        try:
-            os.remove(f)
-        except Exception as e:
-            print(f"Error deleting file {f}: {e}")
-    # Clear the current file info from session
-    if "current_file" in session:
-        session.pop("current_file", None)
+def is_secure_password(password):
+    """Check if the password meets minimum security requirements"""
+    if len(password) < 8:
+        return False
+    
+    # Check if password contains at least one digit, one uppercase, one lowercase
+    has_digit = any(char.isdigit() for char in password)
+    has_upper = any(char.isupper() for char in password)
+    has_lower = any(char.islower() for char in password)
+    
+    return has_digit and has_upper and has_lower
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -487,19 +630,36 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        user = get_user(username)
+        remember = request.form.get("remember") == "on"
         
-        if user and check_password_hash(user["password"], password):
-            # Clear previous user data on login
-            clear_user_data()
-            
-            session["user_id"] = username
-            session["role"] = user["role"]
-            session["session_message"] = "Welcome back! Previous data has been cleared. Please upload a new syllabus."
-            
-            return redirect(next_page)
+        # Validate inputs
+        if not username or not password:
+            error = "Please provide both username and password"
         else:
-            error = "Invalid username or password"
+            user = get_user(username)
+            
+            if user and check_password_hash(user["password"], password):
+                # Clear previous user data on login
+                clear_user_data()
+                
+                # Update last login time
+                update_last_login(user["id"])
+                
+                # Log the activity
+                log_user_activity(user["id"], "login", f"User logged in from {request.remote_addr}")
+                
+                session["user_id"] = username
+                session["user_db_id"] = user["id"]
+                session["role"] = user["role"]
+                session["session_message"] = "Welcome back! Previous data has been cleared. Please upload a new syllabus."
+                
+                # Set session to be permanent if remember me is checked
+                if remember:
+                    session.permanent = True
+                
+                return redirect(next_page)
+            else:
+                error = "Invalid username or password"
     
     return render_template("login.html", error=error)
 
@@ -510,26 +670,109 @@ def signup():
         username = request.form["username"]
         password = request.form["password"]
         confirm_password = request.form["confirm_password"]
+        email = request.form.get("email")
         
-        if password != confirm_password:
+        # Validate inputs
+        if not username or not password or not confirm_password:
+            error = "Please fill out all required fields"
+        elif len(username) < 4:
+            error = "Username must be at least 4 characters long"
+        elif password != confirm_password:
             error = "Passwords do not match"
+        elif not is_secure_password(password):
+            error = "Password must be at least 8 characters and include uppercase, lowercase, and numbers"
+        elif email and not is_valid_email(email):
+            error = "Please enter a valid email address"
         elif get_user(username):
             error = "Username already exists"
         else:
             # Add the user to the database
-            add_user(username, password)
-            
-            # Clear any previous data
-            clear_user_data()
-            
-            # Set session variables
-            session["user_id"] = username
-            session["role"] = "user"
-            session["session_message"] = "Account created successfully! You can now upload a syllabus."
-            
-            return redirect(url_for("index"))
+            if add_user(username, password, "user", email):
+                # Clear any previous data
+                clear_user_data()
+                
+                # Get the user to get their ID
+                user = get_user(username)
+                
+                # Set session variables
+                session["user_id"] = username
+                session["user_db_id"] = user["id"]
+                session["role"] = "user"
+                session["session_message"] = "Account created successfully! You can now upload a syllabus."
+                
+                # Log the activity
+                log_user_activity(user["id"], "signup", f"User account created from {request.remote_addr}")
+                
+                return redirect(url_for("index"))
+            else:
+                error = "Error creating account. Please try again."
     
     return render_template("signup.html", error=error)
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    user = get_user(session["user_id"])
+    error = None
+    success = None
+    
+    if request.method == "POST":
+        if "update_profile" in request.form:
+            # Handle profile update
+            email = request.form.get("email")
+            
+            conn = sqlite3.connect(DB_PATH)
+            cursor = conn.cursor()
+            
+            cursor.execute(
+                "UPDATE users SET email = ? WHERE id = ?",
+                (email, user["id"])
+            )
+            conn.commit()
+            conn.close()
+            
+            success = "Profile updated successfully"
+            # Update the user info after changes
+            user = get_user(session["user_id"])
+            
+        elif "change_password" in request.form:
+            # Handle password change
+            current_password = request.form.get("current_password")
+            new_password = request.form.get("new_password")
+            confirm_password = request.form.get("confirm_new_password")
+            
+            if not check_password_hash(user["password"], current_password):
+                error = "Current password is incorrect"
+            elif new_password != confirm_password:
+                error = "New passwords do not match"
+            else:
+                conn = sqlite3.connect(DB_PATH)
+                cursor = conn.cursor()
+                
+                cursor.execute(
+                    "UPDATE users SET password = ? WHERE id = ?",
+                    (generate_password_hash(new_password), user["id"])
+                )
+                conn.commit()
+                conn.close()
+                
+                log_user_activity(user["id"], "password_change", "User changed password")
+                success = "Password changed successfully"
+    
+    # Get user activity history
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "SELECT * FROM user_activities WHERE user_id = ? ORDER BY timestamp DESC LIMIT 10",
+        (user["id"],)
+    )
+    activities = [dict(row) for row in cursor.fetchall()]
+    
+    conn.close()
+    
+    return render_template("profile.html", user=user, activities=activities, error=error, success=success)
 
 @app.route("/logout")
 def logout():

@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EduTrace Sign Up</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    .form-instructions {
+      margin-bottom: 15px;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .validation-message {
+      font-size: 0.8rem;
+      color: #cc0000;
+      margin-top: 5px;
+      display: none;
+    }
+    input.invalid {
+      border-color: #cc0000;
+    }
+  </style>
 </head>
 <body>
   <!-- Navbar -->
@@ -22,16 +38,151 @@
         {% if error %}
         <div class="error-message">{{ error }}</div>
         {% endif %}
-        <form id="signupForm" method="POST" action="{{ url_for('signup') }}">
-          <input type="text" id="username" name="username" placeholder="USERNAME" required />
-          <input type="password" id="password" name="password" placeholder="PASSWORD" required />
-          <input type="password" id="confirm_password" name="confirm_password" placeholder="CONFIRM PASSWORD" required />
+        <div class="form-instructions">
+          <p>Create your account to get started</p>
+          <p>Password must be at least 8 characters with uppercase, lowercase, and numbers</p>
+        </div>
+        <form id="signupForm" method="POST" action="{{ url_for('signup') }}" onsubmit="return validateForm()">
+          <div>
+            <input type="text" id="username" name="username" placeholder="USERNAME" minlength="4" required />
+            <div id="username-validation" class="validation-message">Username must be at least 4 characters</div>
+          </div>
+          <div>
+            <input type="email" id="email" name="email" placeholder="EMAIL" />
+            <div id="email-validation" class="validation-message">Please enter a valid email address</div>
+          </div>
+          <div>
+            <input type="password" id="password" name="password" placeholder="PASSWORD" required />
+            <div id="password-validation" class="validation-message">Password must be at least 8 characters with uppercase, lowercase, and numbers</div>
+          </div>
+          <div>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="CONFIRM PASSWORD" required />
+            <div id="confirm-validation" class="validation-message">Passwords do not match</div>
+          </div>
           <button type="submit">SIGN UP</button>
         </form>
         <p class="login-link">ALREADY HAVE AN ACCOUNT? <a href="{{ url_for('login') }}">LOGIN</a></p>
       </div>
     </div>
   </div>
+
+  <script>
+    // Live validation as user types
+    document.getElementById('username').addEventListener('input', function() {
+      const username = this.value;
+      const validation = document.getElementById('username-validation');
+      
+      if (username.length < 4) {
+        this.classList.add('invalid');
+        validation.style.display = 'block';
+      } else {
+        this.classList.remove('invalid');
+        validation.style.display = 'none';
+      }
+    });
+    
+    document.getElementById('email').addEventListener('input', function() {
+      const email = this.value;
+      const validation = document.getElementById('email-validation');
+      
+      if (email && !isValidEmail(email)) {
+        this.classList.add('invalid');
+        validation.style.display = 'block';
+      } else {
+        this.classList.remove('invalid');
+        validation.style.display = 'none';
+      }
+    });
+    
+    document.getElementById('password').addEventListener('input', function() {
+      const password = this.value;
+      const validation = document.getElementById('password-validation');
+      
+      if (!isSecurePassword(password)) {
+        this.classList.add('invalid');
+        validation.style.display = 'block';
+      } else {
+        this.classList.remove('invalid');
+        validation.style.display = 'none';
+      }
+      
+      // Also check confirm password match if it has a value
+      const confirmPassword = document.getElementById('confirm_password');
+      if (confirmPassword.value) {
+        checkPasswordMatch();
+      }
+    });
+    
+    document.getElementById('confirm_password').addEventListener('input', checkPasswordMatch);
+    
+    function checkPasswordMatch() {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password');
+      const validation = document.getElementById('confirm-validation');
+      
+      if (password !== confirmPassword.value) {
+        confirmPassword.classList.add('invalid');
+        validation.style.display = 'block';
+      } else {
+        confirmPassword.classList.remove('invalid');
+        validation.style.display = 'none';
+      }
+    }
+    
+    function isValidEmail(email) {
+      const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return pattern.test(email);
+    }
+    
+    function isSecurePassword(password) {
+      if (password.length < 8) return false;
+      
+      const hasDigit = /[0-9]/.test(password);
+      const hasUpper = /[A-Z]/.test(password);
+      const hasLower = /[a-z]/.test(password);
+      
+      return hasDigit && hasUpper && hasLower;
+    }
+    
+    function validateForm() {
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+      
+      let isValid = true;
+      
+      // Validate username
+      if (username.length < 4) {
+        document.getElementById('username').classList.add('invalid');
+        document.getElementById('username-validation').style.display = 'block';
+        isValid = false;
+      }
+      
+      // Validate email if provided
+      if (email && !isValidEmail(email)) {
+        document.getElementById('email').classList.add('invalid');
+        document.getElementById('email-validation').style.display = 'block';
+        isValid = false;
+      }
+      
+      // Validate password
+      if (!isSecurePassword(password)) {
+        document.getElementById('password').classList.add('invalid');
+        document.getElementById('password-validation').style.display = 'block';
+        isValid = false;
+      }
+      
+      // Validate password match
+      if (password !== confirmPassword) {
+        document.getElementById('confirm_password').classList.add('invalid');
+        document.getElementById('confirm-validation').style.display = 'block';
+        isValid = false;
+      }
+      
+      return isValid;
+    }
+  </script>
 </body>
 </html>
 

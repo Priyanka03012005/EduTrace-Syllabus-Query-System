@@ -1,2 +1,0 @@
-username,password,role
-admin,scrypt:32768:8:1$j0efG1bL7kMLFuXY$9cce862485b432f05fec8e7d487b72e0beef745f15093ac6e8be0b579c43d62da4993b598b7eddf05081cadeda97f8f845e98956345ebc2fb4c58c555bd6bb90,admin

@@ -19,6 +19,7 @@
 
     {% if session.get('user_id') %}
     <div class="profile-container">
+        <a href="{{ url_for('profile') }}" class="profile-btn">Profile</a>
         <a href="{{ url_for('logout') }}" class="login-btn" id="login-btn">Logout</a>
     </div>
     {% else %}

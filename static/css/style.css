@@ -90,6 +90,28 @@ ul {
   background-color: #3a5bd8;
 }
 
+.profile-btn {
+  background-color: transparent;
+  color: #4a6bf5 !important;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid #4a6bf5;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.profile-btn:hover {
+  background-color: #f0f4ff;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
 /* Main Content */
 .main-container {
   max-width: 1200px;
