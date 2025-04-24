@@ -4,7 +4,8 @@ import glob
 import re
 import pdfplumber
 import pandas as pd
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+import json
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from pathlib import Path
@@ -12,6 +13,10 @@ from youtube_utils import get_youtube_links
 from functools import wraps
 import sqlite3
 from datetime import datetime
+from knowledge_base import *
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 YOUTUBE_API_KEY = "AIzaSyAGtjDc-6-oHbIb_ChhozbOtTrnUaHTo9s"
 
@@ -19,53 +24,108 @@ YOUTUBE_API_KEY = "AIzaSyAGtjDc-6-oHbIb_ChhozbOtTrnUaHTo9s"
 os.makedirs('data/users', exist_ok=True)
 os.makedirs('data/pdf', exist_ok=True)
 
+# Chatbot Configuration
+class EduTraceChatbot:
+    def __init__(self):
+        self.chatbase_id = "JqJscnY6sdNCYKyC6cnV-"
+        self.base_url = "https://www.chatbase.co/chatbot-iframe/"
+        self.iframe_url = f"{self.base_url}{self.chatbase_id}"
+        
+    def get_chatbot_embed_code(self):
+        """Generate the HTML embed code for the Chatbase chatbot bubble"""
+        return f"""
+        <div id="chatbot-bubble" class="chatbot-bubble">
+            <div id="chatbot-icon" class="chatbot-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="white"/>
+                </svg>
+            </div>
+            <div id="chatbot-window" class="chatbot-window hidden">
+                <div class="chatbot-header">
+                    <span>EduTrace Assistant</span>
+                    <button id="close-chatbot" class="close-button">×</button>
+                </div>
+                <div class="chatbot-iframe-container">
+                    <iframe
+                        src="{self.iframe_url}"
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        style="border: none;"
+                        allow="microphone"
+                        loading="eager"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+        """
+    
+    def process_user_query(self, query):
+        """Process user queries and return appropriate responses"""
+        knowledge_data = {
+            "system_info": SYSTEM_INFO,
+            "features": FEATURES,
+            "faq": FAQ,
+            "user_guide": USER_GUIDE,
+            "error_messages": ERROR_MESSAGES,
+            "system_commands": SYSTEM_COMMANDS
+        }
+        return json.dumps(knowledge_data)
+
+# Initialize Flask app and chatbot
+app = Flask(__name__)
+app.secret_key = 'your-secret-key'  # Change this to a secure secret key
+chatbot = EduTraceChatbot()
+
 # Database initialization
 def init_db():
     conn = sqlite3.connect('data/users/users.db')
     cursor = conn.cursor()
     
-    # Drop existing tables if they exist
-    cursor.execute('DROP TABLE IF EXISTS user_activities')
-    cursor.execute('DROP TABLE IF EXISTS users')
-    
-    # Create users table with correct schema
-    cursor.execute('''
-    CREATE TABLE users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
-        role TEXT NOT NULL DEFAULT 'user',
-        email TEXT,
-        created_at TEXT NOT NULL,
-        last_login TEXT
-    )
-    ''')
-    
-    # Create user_activities table
-    cursor.execute('''
-    CREATE TABLE user_activities (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
-        activity_type TEXT NOT NULL,
-        details TEXT,
-        timestamp TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users (id)
-    )
-    ''')
-    
-    conn.commit()
-    
-    # Add default admin user
-    cursor.execute(
-        "INSERT INTO users (username, password, role, created_at) VALUES (?, ?, ?, ?)",
-        ('admin', generate_password_hash('admin123'), 'admin', datetime.now().isoformat())
-    )
-    conn.commit()
-    
-    # Migrate from CSV if exists
-    migrate_from_csv()
-    
-    conn.close()
+    try:
+        # Create users table if it doesn't exist
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL,
+                role TEXT NOT NULL DEFAULT 'user',
+                email TEXT,
+                created_at TEXT NOT NULL,
+                last_login TEXT
+            )
+        ''')
+        
+        # Create user_activities table if it doesn't exist
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS user_activities (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                activity_type TEXT NOT NULL,
+                details TEXT,
+                timestamp TEXT NOT NULL,
+                FOREIGN KEY (user_id) REFERENCES users (id)
+            )
+        ''')
+        
+        conn.commit()
+        
+        # Check if admin user exists, if not create it
+        cursor.execute("SELECT COUNT(*) FROM users WHERE username = 'admin'")
+        if cursor.fetchone()[0] == 0:
+            cursor.execute(
+                "INSERT INTO users (username, password, role, created_at) VALUES (?, ?, ?, ?)",
+                ('admin', generate_password_hash('admin123'), 'admin', datetime.now().isoformat())
+            )
+            conn.commit()
+        
+        migrate_from_csv()
+        
+    except Exception as e:
+        print(f"Error initializing database: {e}")
+        conn.rollback()
+    finally:
+        conn.close()
 
 # Migration from CSV to SQLite
 def migrate_from_csv():
@@ -101,7 +161,6 @@ def migrate_from_csv():
 # Initialize the database
 init_db()
 
-app = Flask(__name__)
 app.secret_key = "edutracesecretsyllabus123"  # Added secret key for sessions
 UPLOAD_FOLDER = 'data/pdf'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -293,6 +352,44 @@ def check_syllabus(filepath):
         print(f"Error checking syllabus: {e}")
         return False
 
+def merge_keywords_to_data():
+    """Merge keywords from keyword.json into data.csv based on subject and module name matching"""
+    try:
+        # Load keywords from JSON
+        with open('keyword.json', 'r', encoding='utf-8') as json_file:
+            keyword_data = json.load(json_file)
+        
+        # Read existing data.csv from the correct path
+        df = pd.read_csv('data/data.csv')
+        
+        # Create a new column for keywords if it doesn't exist
+        if 'Keywords' not in df.columns:
+            df['Keywords'] = ''
+        
+        # Update keywords for matching subjects and modules
+        for subject, modules in keyword_data.items():
+            for module, keywords in modules.items():
+                # Find matching rows in data.csv
+                mask = (df['Subject'].str.lower() == subject.lower()) & \
+                       (df['Module content'].str.lower() == module.lower())
+                
+                if mask.any():
+                    # Convert keywords to string if it's a list
+                    if isinstance(keywords, list):
+                        keywords_str = ', '.join(keywords)
+                    else:
+                        keywords_str = str(keywords)
+                    
+                    # Update the Keywords column for matching rows
+                    df.loc[mask, 'Keywords'] = keywords_str
+        
+        # Save the updated data back to data.csv at the correct path
+        df.to_csv('data/data.csv', index=False)
+        print("Keywords successfully merged into data/data.csv")
+        
+    except Exception as e:
+        print(f"Error merging keywords: {e}")
+
 def process_pdf_data(csv_input_path, csv_output_path):
     try:
         df = pd.read_csv(csv_input_path)
@@ -327,108 +424,106 @@ def process_pdf_data(csv_input_path, csv_output_path):
         
         df.to_csv(csv_output_path, index=False)
         print(f"✅ Final processed data saved to {csv_output_path}")
+        
+        # Merge keywords after processing the PDF data
+        merge_keywords_to_data()
+        
         return True
     except Exception as e:
         print(f"Error processing PDF data: {e}")
         return False
 
+# --- Preprocess text (used in queries and keyword matching)
 def preprocess_text(text):
-    text = str(text).lower()
-    text = re.sub(r"[^a-zA-Z0-9\s]", " ", text)
-    text = re.sub(r"\s+", " ", text).strip()
-    return text
+    """Clean and lowercase the input"""
+    return re.sub(r'[^a-zA-Z0-9\s]', '', text.lower())
 
-def detect_subject_module(question, df):
-    question = preprocess_text(question)
-    best_match = None
-    max_score = 0
-    question_words = set(question.split())
-    
-    # Create weighted keywords from question
-    word_weights = {}
-    for word in question_words:
-        # Skip common short words
-        if len(word) <= 3 or word in ["and", "the", "for", "what", "how", "when", "who", "why"]:
-            continue
+# --- Load keyword data from JSON
+def load_keyword_data(json_path='keyword.json'):
+    try:
+        with open(json_path, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    except Exception as e:
+        print(f"Error loading keyword data: {e}")
+        return {}
+
+# --- Main function to detect subject and module
+def get_subject_module_from_ai(question, df):
+    """Uses AI to find the most relevant subject and module based on semantic similarity"""
+    try:
+        # Initialize the model
+        model = SentenceTransformer('all-MiniLM-L6-v2')
         
-        # Higher weight for longer words (likely more specific terms)
-        if len(word) >= 8:
-            word_weights[word] = 3
-        elif len(word) >= 6:
-            word_weights[word] = 2
-        else:
-            word_weights[word] = 1
-    
-    # If we have very few keywords, try to use all words
-    if len(word_weights) < 2:
-        for word in question_words:
-            if word not in word_weights and len(word) > 2:
-                word_weights[word] = 0.5
-    
-    # Process each row in the dataframe
-    for _, row in df.iterrows():
-        try:
-            subject = preprocess_text(str(row["Subject"]))
-            module_content = preprocess_text(str(row["Module content"]))
-            
-            # Get words from both subject and module content
-            combined_text = subject + " " + module_content
-            
-            # Calculate score for this row
-            score = 0
-            exact_matches = 0
-            
-            for word, weight in word_weights.items():
-                # Check for exact word matches (higher value)
-                if word in combined_text.split():
-                    score += weight * 2
-                    exact_matches += 1
-                # Check for partial matches (lower value)
-                elif word in combined_text:
-                    score += weight
-            
-            # Bonus for consecutive word matches (phrases)
-            for i in range(len(question.split()) - 1):
-                phrase = " ".join(question.split()[i:i+2])
-                if phrase in combined_text:
-                    score += 2
-            
-            # Apply a small bonus if the module number is 1 (typically intro/foundation)
-            # For very basic questions
-            if str(row["Module no"]) == "1" and len(word_weights) < 3:
-                score += 0.5
-                
-            # If we have a better score than our previous best
-            if score > max_score:
-                max_score = score
-                
-                # Calculate confidence based on exact matches and total keywords
-                if len(word_weights) > 0:
-                    confidence = min(100, int((score / (sum(word_weights.values()) * 2)) * 100))
-                else:
-                    confidence = 0
-                    
-                best_match = {
-                    "subject": row["Subject"],
-                    "module_no": row["Module no"],
-                    "module_name": row["Module content"],
-                    "confidence": confidence,
-                    "score": score  # For debugging
-                }
-        except Exception as e:
-            print(f"Error matching row: {e}")
-            continue
-
-    # If no good match is found
-    if best_match is None or max_score < 1:
-        return {
-            "subject": "Out of Syllabus",
-            "module_no": "N/A",
-            "module_name": "No relevant module found.",
-            "confidence": 0
+        # Preprocess the question
+        question_clean = preprocess_text(question)
+        
+        # Get unique subjects and their modules
+        subjects = df['Subject'].unique()
+        course_modules = {
+            subject: df[df['Subject'] == subject]['Module content'].tolist()
+            for subject in subjects
         }
-    
-    return best_match
+        
+        # 1. Find the most relevant subject using AI
+        subject_embeddings = model.encode(subjects)
+        question_embedding = model.encode([question_clean])
+        subject_similarities = cosine_similarity(question_embedding, subject_embeddings)[0]
+        
+        # Get the best matching subject
+        best_subject_idx = subject_similarities.argmax()
+        best_subject = subjects[best_subject_idx]
+        subject_confidence = float(subject_similarities[best_subject_idx]) * 100
+        
+        # 2. Find the most relevant module within the best subject
+        module_texts = course_modules[best_subject]
+        module_embeddings = model.encode(module_texts)
+        module_similarities = cosine_similarity(question_embedding, module_embeddings)[0]
+        
+        # Get the best matching module
+        best_module_idx = module_similarities.argmax()
+        best_module = module_texts[best_module_idx]
+        module_confidence = float(module_similarities[best_module_idx]) * 100
+        
+        # Get the module number
+        module_no = df[(df['Subject'] == best_subject) & 
+                      (df['Module content'] == best_module)]['Module no'].iloc[0]
+        
+        # Calculate overall confidence
+        overall_confidence = (subject_confidence + module_confidence) / 2
+        
+        # Only return if confidence is above a threshold (e.g., 30%)
+        if overall_confidence > 30:
+            return {
+                "subject": best_subject,
+                "module_no": module_no,
+                "module_name": best_module,
+                "confidence": int(overall_confidence),
+                "course_confidence": int(subject_confidence),
+                "module_confidence": int(module_confidence),
+                "method": "AI Semantic Matching"
+            }
+        else:
+            return {
+                "subject": "Out of Syllabus",
+                "module_no": "N/A",
+                "module_name": "No relevant module found.",
+                "confidence": 0,
+                "course_confidence": 0,
+                "module_confidence": 0,
+                "method": "Confidence too low"
+            }
+            
+    except Exception as e:
+        print(f"Error in AI-based detection: {e}")
+        return {
+            "subject": "Error",
+            "module_no": "N/A",
+            "module_name": str(e),
+            "confidence": 0,
+            "course_confidence": 0,
+            "module_confidence": 0,
+            "method": "Exception"
+        }
 
 def is_valid_email(email):
     """Basic email validation"""
@@ -452,93 +547,13 @@ def is_secure_password(password):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    result = None
-    error = None
-    show_input = False
-    youtube_links = []
-    question = None
-
-    # Check if user is logged in
-    is_logged_in = 'user_id' in session
-
-    if request.method == "POST":
-        # If trying to ask a question but not logged in, redirect to login
-        if "question" in request.form and not is_logged_in:
-            return redirect(url_for('login', next=request.url))
-            
-        if "pdf" in request.files and request.files["pdf"].filename:
-            pdf = request.files["pdf"]
-            if not allowed_file(pdf.filename):
-                error = "❌ Please upload a PDF file - only PDF files are accepted"
-            else:
-                try:
-                    filename = secure_filename(pdf.filename)
-                    pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                    pdf.save(pdf_path)
-                    
-                    # Validate the PDF file
-                    if not is_valid_pdf(pdf_path):
-                        error = "❌ Invalid or corrupted PDF file. Please upload a valid PDF."
-                        os.remove(pdf_path)
-                    else:
-                        # Clear previous data but keep the PDF
-                        clear_data_folder()
-                        # Re-save the PDF
-                        pdf.seek(0)
-                        pdf.save(pdf_path)
-                        
-                        # Process the PDF
-                        if not pdf_to_csv(pdf_path, "data/output.csv"):
-                            error = "❌ Could not extract tables from PDF. Please ensure it's a valid syllabus."
-                        elif not check_syllabus("data/output.csv"):
-                            error = "❌ Not a valid Third Year Computer Engineering syllabus. Please upload the correct syllabus."
-                        elif not extract_course_and_modules("data/output.csv", "data/data.csv"):
-                            error = "❌ Could not extract course modules from PDF. Please check the format."
-                        elif not process_pdf_data("data/data.csv", "data/data.csv"):
-                            error = "❌ Error processing data from PDF. Please try again."
-                        else:
-                            show_input = True
-                            # Add success message after successful upload
-                            session["file_upload_success"] = f"✅ File '{filename}' uploaded and processed successfully! Now you can ask questions about the syllabus."
-                            # Store the current file name
-                            session["current_file"] = filename
-                            
-                except Exception as e:
-                    error = f"❌ Error processing PDF: {str(e)}"
-                    print(error)
-
-        elif "question" in request.form and request.form["question"] and is_logged_in:
-            question = request.form["question"]
-            try:
-                if not os.path.exists("data/data.csv"):
-                    error = "❌ Please upload a valid syllabus PDF first."
-                else:
-                    df = pd.read_csv("data/data.csv")
-                    if df.empty:
-                        error = "❌ No data found in syllabus. Please upload a valid syllabus PDF."
-                    else:
-                        result = detect_subject_module(question, df)
-                        if result and result["subject"] != "Out of Syllabus":
-                            youtube_links = get_youtube_links(result["module_name"], YOUTUBE_API_KEY)
-                        show_input = True
-            except Exception as e:
-                error = f"❌ Error detecting module: {str(e)}"
-                print(error)
-
-    # Check if data.csv exists to determine if we should show the question input
-    if os.path.exists("data/data.csv") and is_logged_in:
-        show_input = True
-    elif os.path.exists("data/data.csv") and not is_logged_in:
-        # PDF is processed but user is not logged in
-        error = "Please log in to ask questions and detect modules"
-        show_input = False
-
-    # Pass the current file name to template if it exists
-    current_file = session.get("current_file", None)
-
-    return render_template("index.html", result=result, error=error, show_input=show_input, 
-                            youtube_links=youtube_links, question=question, is_logged_in=is_logged_in,
-                            current_file=current_file)
+    """Render the home page with the chatbot bubble"""
+    try:
+        return render_template('index.html', 
+                            chatbot_embed=chatbot.get_chatbot_embed_code())
+    except Exception as e:
+        flash(f"Error loading chatbot: {str(e)}", "error")
+        return render_template('index.html')
 
 @app.route("/module_detect", methods=["GET", "POST"])
 @login_required
@@ -598,7 +613,7 @@ def module_detect():
                     if df.empty:
                         error = "❌ No data found in syllabus. Please upload a valid syllabus PDF."
                     else:
-                        result = detect_subject_module(question, df)
+                        result = get_subject_module_from_ai(question, df)
                         if result and result["subject"] != "Out of Syllabus":
                             youtube_links = get_youtube_links(result["module_name"], YOUTUBE_API_KEY)
                         show_input = True
@@ -724,6 +739,21 @@ def clear_session_message():
     # Also handle file upload success message
     if 'file_upload_success' in session and request.method == 'GET' and request.endpoint not in ['index', 'module_detect']:
         session.pop('file_upload_success', None)
+
+@app.route('/api/chatbot/knowledge', methods=['GET'])
+def get_knowledge_base():
+    """API endpoint to provide knowledge base data to Chatbase"""
+    try:
+        return jsonify({
+            "system_info": SYSTEM_INFO,
+            "features": FEATURES,
+            "faq": FAQ,
+            "user_guide": USER_GUIDE,
+            "error_messages": ERROR_MESSAGES,
+            "system_commands": SYSTEM_COMMANDS
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
