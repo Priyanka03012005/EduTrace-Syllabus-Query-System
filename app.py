@@ -13,21 +13,20 @@ from youtube_utils import get_youtube_links
 from functools import wraps
 import sqlite3
 from datetime import datetime
-from knowledge_base import *
+from knowledge_base import (
+    SYSTEM_INFO, FEATURES, FAQ, USER_GUIDE, ERROR_MESSAGES,
+    SYSTEM_COMMANDS, CHATBOT_RESPONSES, SUBJECT_KEYWORDS,
+    MODULE_HELP, LEARNING_RESOURCES
+)
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-
-YOUTUBE_API_KEY = "AIzaSyAGtjDc-6-oHbIb_ChhozbOtTrnUaHTo9s"
-
-# Create data directory if it doesn't exist
-os.makedirs('data/users', exist_ok=True)
-os.makedirs('data/pdf', exist_ok=True)
+import random
 
 # Chatbot Configuration
 class EduTraceChatbot:
     def __init__(self):
-        self.chatbase_id = "JqJscnY6sdNCYKyC6cnV-"
+        self.chatbase_id = "J5-odKLyZU5GfLAq-0eu-"
         self.base_url = "https://www.chatbase.co/chatbot-iframe/"
         self.iframe_url = f"{self.base_url}{self.chatbase_id}"
         
@@ -58,8 +57,92 @@ class EduTraceChatbot:
                 </div>
             </div>
         </div>
+        <style>
+            .chatbot-bubble {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 1000;
+            }
+            .chatbot-icon {
+                width: 60px;
+                height: 60px;
+                background-color: #4CAF50;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                transition: transform 0.3s ease;
+            }
+            .chatbot-icon:hover {
+                transform: scale(1.1);
+            }
+            .chatbot-window {
+                position: fixed;
+                bottom: 90px;
+                right: 20px;
+                width: 350px;
+                height: 500px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+            .chatbot-header {
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .close-button {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0 5px;
+            }
+            .chatbot-iframe-container {
+                flex: 1;
+                position: relative;
+                overflow: hidden;
+            }
+            .chatbot-iframe-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {{
+                const bubble = document.getElementById('chatbot-bubble');
+                const icon = document.getElementById('chatbot-icon');
+                const window = document.getElementById('chatbot-window');
+                const closeButton = document.getElementById('close-chatbot');
+                
+                icon.addEventListener('click', function() {{
+                    window.classList.toggle('hidden');
+                }});
+                
+                closeButton.addEventListener('click', function() {{
+                    window.classList.add('hidden');
+                }});
+            }});
+        </script>
         """
-    
+
     def process_user_query(self, query):
         """Process user queries and return appropriate responses"""
         knowledge_data = {
@@ -72,10 +155,18 @@ class EduTraceChatbot:
         }
         return json.dumps(knowledge_data)
 
-# Initialize Flask app and chatbot
+# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'your-secret-key'  # Change this to a secure secret key
+app.secret_key = 'your-secret-key-here'  # Change this to a secure secret key
+
+# Initialize chatbot
 chatbot = EduTraceChatbot()
+
+YOUTUBE_API_KEY = "AIzaSyAGtjDc-6-oHbIb_ChhozbOtTrnUaHTo9s"
+
+# Create data directory if it doesn't exist
+os.makedirs('data/users', exist_ok=True)
+os.makedirs('data/pdf', exist_ok=True)
 
 # Database initialization
 def init_db():
@@ -549,11 +640,11 @@ def is_secure_password(password):
 def index():
     """Render the home page with the chatbot bubble"""
     try:
-        return render_template('index.html', 
-                            chatbot_embed=chatbot.get_chatbot_embed_code())
+        chatbot_embed = chatbot.get_chatbot_embed_code()
+        return render_template('index.html', chatbot_embed=chatbot_embed)
     except Exception as e:
-        flash(f"Error loading chatbot: {str(e)}", "error")
-        return render_template('index.html')
+        print(f"Error loading chatbot: {str(e)}")
+        return render_template('index.html', chatbot_embed="")
 
 @app.route("/module_detect", methods=["GET", "POST"])
 @login_required

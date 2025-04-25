@@ -252,6 +252,7 @@ form {
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"],
 input[type="file"] {
   width: 100%;
@@ -268,6 +269,7 @@ input[type="file"] {
 }
 
 input[type="text"]:focus,
+input[type="email"]:focus
 input[type="password"]:focus {
   outline: none;
   border-color: #4a6bf5;

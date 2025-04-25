@@ -280,11 +280,15 @@
     </section>
   </div>
 
-  <footer class="footer">
-    <p>&copy; 2025 EduTrace. All rights reserved.</p>
-  </footer>
+  <!-- Include Chatbot -->
+  {% include 'chatbot.html' %}
 
-  {{ chatbot_embed | safe }}
+  <!-- Footer -->
+  <!-- <footer>
+    <div class="container">
+      <p>&copy; 2025 EduTrace. All rights reserved.</p>
+    </div>
+  </footer> -->
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

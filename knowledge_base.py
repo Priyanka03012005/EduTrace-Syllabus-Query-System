@@ -3,118 +3,160 @@ Knowledge Base for EduTrace Chatbot
 This file contains structured information about the EduTrace system for use in a chatbot.
 """
 
+import json
+
+# Load keywords from keyword.json
+def load_keywords():
+    try:
+        with open('keyword.json', 'r', encoding='utf-8') as file:
+            return json.load(file)
+    except Exception as e:
+        print(f"Error loading keywords: {e}")
+        return {}
+
 # System Information
 SYSTEM_INFO = {
     "name": "EduTrace",
-    "description": "An intelligent, AI-powered web platform that helps students identify syllabus-related information",
     "version": "1.0",
-    "purpose": "To help students identify subject, module number, and content of syllabus-related questions"
+    "description": "Smart Question Categorization System for Educational Content",
+    "purpose": "Help students and educators find relevant course content based on natural language questions"
 }
 
-# Features
+# System Features
 FEATURES = [
     {
-        "name": "PDF Syllabus Upload",
-        "description": "Upload and process Third Year Computer Engineering syllabus PDFs",
-        "requirements": "Must be a valid PDF file with proper table structure"
+        "name": "Smart Question Categorization",
+        "description": "Uses AI to match your questions with relevant course modules",
+        "how_to_use": "Simply type your question about any topic, and the system will find the most relevant module"
     },
     {
-        "name": "Question Analysis",
-        "description": "Analyze questions to identify which module and subject they belong to",
-        "capabilities": [
-            "Detect subject",
-            "Identify module number",
-            "Extract relevant content",
-            "Provide confidence scores"
-        ]
+        "name": "Syllabus Processing",
+        "description": "Upload and process PDF syllabi to extract course information",
+        "how_to_use": "Upload a PDF syllabus file through the module detection page"
     },
     {
         "name": "YouTube Integration",
-        "description": "Automatically fetch relevant educational videos for detected topics",
-        "requirements": "Requires YouTube API key"
+        "description": "Get relevant YouTube video recommendations for matched modules",
+        "how_to_use": "After asking a question, relevant YouTube videos will be displayed"
     },
     {
-        "name": "User Management",
-        "description": "Login and signup functionality for personalized experience",
-        "features": [
-            "User authentication",
-            "Session management",
-            "Personalized data storage"
-        ]
+        "name": "Confidence Scoring",
+        "description": "See how confident the system is about its matches",
+        "how_to_use": "Check the confidence scores displayed with each match"
     }
 ]
 
-# Common Questions and Answers
+# Frequently Asked Questions
 FAQ = [
     {
-        "question": "What types of PDFs can I upload?",
-        "answer": "You can upload Third Year Computer Engineering syllabus PDFs. The PDF must be valid and contain proper table structure for module extraction."
+        "question": "How do I upload a syllabus?",
+        "answer": "Go to the Module Detection page, click 'Choose File', select your PDF syllabus, and click 'Upload'"
     },
     {
-        "question": "How do I get started?",
-        "answer": "1. Create an account or login\n2. Upload a valid syllabus PDF\n3. Start asking questions about the syllabus content"
+        "question": "What types of questions can I ask?",
+        "answer": "You can ask any question related to your course content. The system will find the most relevant module"
     },
     {
-        "question": "What information can I get from the system?",
-        "answer": "You can get information about:\n- Subject identification\n- Module number\n- Module content\n- Related YouTube videos\n- Confidence scores for matches"
+        "question": "How accurate is the system?",
+        "answer": "The system uses AI to provide accurate matches. You'll see confidence scores to indicate match quality"
     },
     {
-        "question": "How accurate are the results?",
-        "answer": "The system provides confidence scores to help you evaluate the accuracy of results. The accuracy depends on the quality of the uploaded syllabus and the clarity of your question."
+        "question": "Can I see my previous questions?",
+        "answer": "Currently, the system processes questions in real-time and doesn't store history"
+    },
+    {
+        "question": "What if my question doesn't match any module?",
+        "answer": "The system will indicate 'Out of Syllabus' if no relevant match is found"
     }
 ]
-
-# Technical Requirements
-TECHNICAL_INFO = {
-    "dependencies": [
-        "flask",
-        "pdfplumber",
-        "pandas",
-        "werkzeug",
-        "requests"
-    ],
-    "python_version": "3.6+",
-    "database": "SQLite",
-    "api_integrations": [
-        "YouTube Data API v3"
-    ]
-}
 
 # User Guide
 USER_GUIDE = {
     "getting_started": [
-        "Install required packages",
-        "Run the Flask application",
-        "Access the web interface at http://127.0.0.1:5000/",
-        "Login with default credentials (admin/admin123) or create new account"
+        "1. Upload your syllabus PDF",
+        "2. Wait for processing to complete",
+        "3. Start asking questions about course content",
+        "4. View matched modules and YouTube recommendations"
     ],
-    "file_upload": [
-        "Click on the upload button",
-        "Select a valid syllabus PDF",
-        "Wait for processing confirmation",
-        "Start asking questions"
+    "best_practices": [
+        "Be specific in your questions",
+        "Use natural language",
+        "Focus on course-related topics",
+        "Check confidence scores for match quality"
     ],
-    "question_format": [
-        "Ask questions in natural language",
-        "Be specific about the topic or concept",
-        "Include relevant keywords",
-        "Example: 'What is the content of Module 3 in Computer Networks?'"
+    "troubleshooting": [
+        "If upload fails, check PDF format",
+        "For no matches, try rephrasing your question",
+        "If videos don't load, check your internet connection",
+        "Contact support if issues persist"
     ]
 }
 
 # Error Messages
 ERROR_MESSAGES = {
-    "invalid_pdf": "The uploaded file must be a valid PDF containing Third Year Computer Engineering syllabus content.",
-    "authentication": "Invalid username or password. Please try again.",
-    "file_processing": "Error processing the PDF file. Please ensure it meets the requirements.",
-    "api_error": "Error connecting to YouTube API. Please try again later."
+    "upload_error": "Error uploading syllabus. Please check file format and try again.",
+    "processing_error": "Error processing syllabus. Please ensure it's a valid PDF.",
+    "no_match": "No relevant module found. Try rephrasing your question.",
+    "api_error": "Error connecting to services. Please try again later.",
+    "invalid_syllabus": "Invalid syllabus format. Please upload a valid syllabus PDF."
 }
 
 # System Commands
 SYSTEM_COMMANDS = {
-    "help": "Display help information and available commands",
-    "upload": "Upload a new syllabus PDF",
-    "analyze": "Analyze a question against the current syllabus",
-    "logout": "Logout from the current session",
-    "clear": "Clear current session data"
+    "help": "Show this help message",
+    "features": "List all system features",
+    "guide": "Show user guide",
+    "faq": "Show frequently asked questions",
+    "clear": "Clear current conversation",
+    "about": "Show system information"
+}
+
+# Chatbot Responses
+CHATBOT_RESPONSES = {
+    "greeting": [
+        "Hello! How can I help you with your course content today?",
+        "Hi there! What would you like to know about your courses?",
+        "Welcome! Ask me anything about your syllabus."
+    ],
+    "farewell": [
+        "Goodbye! Feel free to come back with more questions.",
+        "See you later! Don't hesitate to ask if you need help.",
+        "Bye! Have a great learning experience!"
+    ],
+    "thanks": [
+        "You're welcome! Is there anything else I can help with?",
+        "Glad I could help! Feel free to ask more questions.",
+        "Happy to assist! Let me know if you need anything else."
+    ],
+    "confused": [
+        "I'm not sure I understand. Could you rephrase that?",
+        "Could you provide more details about what you're looking for?",
+        "I'm having trouble understanding. Could you try asking differently?"
+    ]
+}
+
+# Load subject and module data from keyword.json
+keyword_data = load_keywords()
+
+# Subject-Specific Keywords
+SUBJECT_KEYWORDS = {}
+for subject, modules in keyword_data.items():
+    # Collect all keywords from all modules for each subject
+    all_keywords = []
+    for module_keywords in modules.values():
+        all_keywords.extend(module_keywords)
+    SUBJECT_KEYWORDS[subject] = list(set(all_keywords))  # Remove duplicates
+
+# Module-Specific Help
+MODULE_HELP = {}
+for subject, modules in keyword_data.items():
+    for module_name, keywords in modules.items():
+        MODULE_HELP[module_name] = f"Topics in {module_name} include: {', '.join(keywords[:5])}..."
+
+# Learning Resources
+LEARNING_RESOURCES = {
+    "videos": "YouTube video recommendations are provided for matched modules",
+    "textbooks": "Refer to your course textbooks for detailed information",
+    "practice": "Try solving related problems to reinforce understanding",
+    "discussion": "Engage in discussions with peers and instructors"
 } 
