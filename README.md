@@ -12,7 +12,6 @@ EduTrace is an intelligent, AI-powered web platform that helps students effortle
 - **User Authentication**: Login and signup functionality for personalized experience
 - **File Status Indicator**: Clear visual feedback showing currently loaded file
 - **Session Management**: User data is cleared on login for a personalized experience
-- **Upload Notifications**: Success messages when files are uploaded successfully
 - **Responsive Design**: Works across all devices and screen sizes
 
 ## Installation Requirements
@@ -28,7 +27,7 @@ pip install flask pdfplumber pandas werkzeug requests
 3. Run the Flask application:
 
 ```
-python appp.py
+python app.py
 ```
 
 4. Open your browser and navigate to http://127.0.0.1:5000/
@@ -46,7 +45,7 @@ python appp.py
 
 ## File Structure
 
-- `appp.py`: Main Flask application
+- `app.py`: Main Flask application
 - `youtube_utils.py`: YouTube API integration utilities
 - `templates/`: HTML templates
 - `static/css/`: CSS stylesheets
@@ -80,6 +79,4 @@ python appp.py
 ## Recent Updates
 
 - Added current file indicator to show which syllabus is loaded
-- Improved user feedback with visual success notifications
-- Enhanced session management for better user experience
 - Fixed various UI bugs and improved responsive design 

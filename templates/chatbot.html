@@ -17,6 +17,43 @@
             padding: 0;
             background-color: #f5f5f5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: #4CAF50;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #45a049;
         }
         
         /* Chatbot Bubble Styles */
@@ -58,11 +95,15 @@
             overflow: hidden;
             transform: scale(0);
             transform-origin: bottom right;
-            transition: transform 0.3s ease;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
         }
         
         .chatbot-window.active {
             transform: scale(1);
+            opacity: 1;
+            pointer-events: auto;
         }
         
         .chatbot-header {
@@ -72,6 +113,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-family: Arial, sans-serif;
         }
         
         .close-button {
@@ -81,12 +123,16 @@
             font-size: 24px;
             cursor: pointer;
             padding: 0 5px;
+            transition: transform 0.2s ease;
+        }
+        
+        .close-button:hover {
+            transform: scale(1.2);
         }
         
         .chatbot-iframe-container {
             flex: 1;
             position: relative;
-            overflow: hidden;
         }
         
         .chatbot-iframe-container iframe {
@@ -118,61 +164,105 @@
                 border-radius: 0;
             }
             
-            .chatbot-icon {
+            .chatbot-bubble {
                 width: 50px;
                 height: 50px;
+            }
+
+            .footer {
+                padding: 15px 0;
+            }
+
+            .footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .footer-links a {
+                margin: 5px 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <!-- Your main website content goes here -->
-        <h1>Welcome to EduTrace</h1>
-        <p>Your intelligent syllabus assistant</p>
+    <!-- Chatbot with bubble interface -->
+    <div class="chatbot-container">
+        <!-- Chatbot Bubble -->
+        <div id="chatbot-bubble" class="chatbot-bubble">
+            <div class="chatbot-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="white"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Chatbot Window -->
+        <div id="chatbot-window" class="chatbot-window">
+            <div class="chatbot-header">
+                <span>EduTrace Assistant</span>
+                <button id="close-chatbot" class="close-button">×</button>
+            </div>
+            <div class="chatbot-iframe-container">
+                <iframe
+                    src="https://www.chatbase.co/chatbot-iframe/J5-odKLyZU5GfLAq-0eu-"
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    allow="microphone"
+                    loading="eager"
+                ></iframe>
+            </div>
+        </div>
     </div>
-    
-    {{ chatbot_embed | safe }}
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 EduTrace. All rights reserved.</p>
+        </div>
+    </footer>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const chatbotBubble = document.getElementById('chatbot-bubble');
-            const chatbotIcon = document.getElementById('chatbot-icon');
             const chatbotWindow = document.getElementById('chatbot-window');
             const closeButton = document.getElementById('close-chatbot');
-            
-            // Toggle chatbot window
-            chatbotIcon.addEventListener('click', function() {
-                chatbotWindow.classList.remove('hidden');
-                setTimeout(() => {
+            let isOpen = false;
+
+            // Toggle chatbot window when bubble is clicked
+            chatbotBubble.addEventListener('click', function() {
+                isOpen = !isOpen;
+                if (isOpen) {
                     chatbotWindow.classList.add('active');
-                }, 10);
-            });
-            
-            // Close chatbot window
-            closeButton.addEventListener('click', function() {
-                chatbotWindow.classList.remove('active');
-                setTimeout(() => {
-                    chatbotWindow.classList.add('hidden');
-                }, 300);
-            });
-            
-            // Close on escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && chatbotWindow.classList.contains('active')) {
+                } else {
                     chatbotWindow.classList.remove('active');
-                    setTimeout(() => {
-                        chatbotWindow.classList.add('hidden');
-                    }, 300);
                 }
             });
 
-            // Debug logging
-            console.log('Chatbot elements loaded:', {
-                bubble: chatbotBubble,
-                icon: chatbotIcon,
-                window: chatbotWindow,
-                closeButton: closeButton
+            // Close chatbot window when close button is clicked
+            closeButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                isOpen = false;
+                chatbotWindow.classList.remove('active');
+            });
+
+            // Close chatbot window when Escape key is pressed
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isOpen) {
+                    isOpen = false;
+                    chatbotWindow.classList.remove('active');
+                }
+            });
+
+            // Close chatbot window when clicking outside
+            document.addEventListener('click', function(e) {
+                if (isOpen && 
+                    !chatbotWindow.contains(e.target) && 
+                    !chatbotBubble.contains(e.target)) {
+                    isOpen = false;
+                    chatbotWindow.classList.remove('active');
+                }
             });
         });
     </script>
