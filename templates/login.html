@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduTrace Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    .validation-message {
+      font-size: 0.8rem;
+      color: #cc0000;
+      margin-top: 5px;
+      display: none;
+    }
+    input.invalid {
+      border-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  {% include "nav.html" %}
+
+  <!-- Login Card -->
+  <div class="container">
+    <div class="card">
+      <div class="left-section">
+        <div class="icon">&#128214;</div>
+        <h2>EduTrace</h2>
+      </div>
+      <div class="right-section">
+        <h2>LOGIN PAGE</h2>
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
+        <form id="loginForm" method="POST" action="{{ url_for('login') }}" onsubmit="return validateForm()">
+          <div>
+            <input type="text" id="username" name="username" placeholder="USERNAME" required />
+            <div id="username-validation" class="validation-message">Please enter your username</div>
+          </div>
+          <div>
+            <input type="password" id="password" name="password" placeholder="PASSWORD" required />
+            <div id="password-validation" class="validation-message">Please enter your password</div>
+          </div>
+          <div class="checkbox">
+            <input type="checkbox" id="remember" name="remember" />
+            <label for="remember">REMEMBER ME</label>
+          </div>
+          <button type="submit">LOGIN</button>
+        </form>
+        <p class="login-link">DON'T HAVE AN ACCOUNT? <a href="{{ url_for('signup') }}">SIGN UP</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Live validation as user types
+    document.getElementById('username').addEventListener('input', function() {
+      const username = this.value;
+      const validation = document.getElementById('username-validation');
+      
+      if (!username.trim()) {
+        this.classList.add('invalid');
+        validation.style.display = 'block';
+      } else {
+        this.classList.remove('invalid');
+        validation.style.display = 'none';
+      }
+    });
+    
+    document.getElementById('password').addEventListener('input', function() {
+      const password = this.value;
+      const validation = document.getElementById('password-validation');
+      
+      if (!password) {
+        this.classList.add('invalid');
+        validation.style.display = 'block';
+      } else {
+        this.classList.remove('invalid');
+        validation.style.display = 'none';
+      }
+    });
+    
+    function validateForm() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      let isValid = true;
+      
+      // Validate username
+      if (!username.trim()) {
+        document.getElementById('username').classList.add('invalid');
+        document.getElementById('username-validation').style.display = 'block';
+        isValid = false;
+      }
+      
+      // Validate password
+      if (!password) {
+        document.getElementById('password').classList.add('invalid');
+        document.getElementById('password-validation').style.display = 'block';
+        isValid = false;
+      }
+      
+      return isValid;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<header id="header">
+    <div id="logo">
+        <div class="logo-placeholder">ET</div>
+        <div class="logo">EduTrace</div>
+        {% if session.get('role') == 'admin' %}
+            <div class="role-text">Admin</div>
+        {% elif session.get('role') == 'user' %}
+            <div class="role-text">User</div>
+        {% endif %}
+    </div>
+
+    <nav id="navbar">
+        <ul id="nav-list">
+            <li id="nav-home"><a href="{{ url_for('index') }}">Home</a></li>
+            <li id="nav-how-it-works"><a href="{{ url_for('how') }}">How It Works</a></li>
+            <li id="nav-generate-questions"><a href="{{ url_for('module_detect') }}">Detect</a></li>
+        </ul>
+    </nav>
+
+    {% if session.get('user_id') %}
+    <div class="profile-container">
+        <a href="{{ url_for('logout') }}" class="login-btn" id="login-btn">Logout</a>
+    </div>
+    {% else %}
+    <a href="{{ url_for('login') }}" class="login-btn" id="login-btn">Login</a>
+    {% endif %}
+</header>
