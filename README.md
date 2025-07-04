@@ -2,7 +2,6 @@
 
 EduTrace is an intelligent, AI-powered web platform that helps students effortlessly identify the subject, module number, and content of any syllabus-related question from their engineering curriculum.
 
-[🎥 Click here to watch the demo video](https://youtu.be/lDJ9BKqV1-s)
 
 ## Features
 
