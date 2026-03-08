@@ -1,0 +1,6 @@
+flask
+pdfplumber
+pandas
+werkzeug
+requests
+gunicorn
